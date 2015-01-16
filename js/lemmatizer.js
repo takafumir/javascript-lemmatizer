@@ -69,6 +69,8 @@ Lemmatizer.prototype = {
 
   // public
   lemma: function(form, pos) {
+    var result = null;
+
     if (typeof pos === 'undefined') {
       pos = null;
     }
@@ -78,33 +80,28 @@ Lemmatizer.prototype = {
       var len = parts.length;
       for (var i = 0; i < len; i++) {
         var p = parts[i];
-        var result = this.lemma(form, p);
-        if (result != form) {
+        if (result = this.base_form(form, p)) {
           return result;
         }
       }
       return form;
     }
 
-    if (exc_lemma = this.exceptions[pos][form]) {
-      return exc_lemma;
+    if (result = this.base_form(form, pos)) {
+      return result;
     }
-
-    this.each_lemma(form, pos, this.return_x);
 
     return form;
   },
 
-  return_x: function(x) {
-    return x;
-  },
-  
   // private
   // The following methods are only used by Lemmatizer inside, so don't call them from outside.
+  // set up dictionary data
   load_wordnet_files: function(pos, list, exc) {
     // process wordlists (list)
-    this.open_file(pos, list);
-    var idx_data = this.fetch_idx_data(pos);
+    var key_idx = pos + "_idx";
+    this.open_file(key_idx, list);
+    var idx_data = this.fetch_idx_data(key_idx);
     var idx_len  = idx_data.length;
     for (var i = 0; i < idx_len; i++) {
       var w = idx_data[i];
@@ -112,34 +109,32 @@ Lemmatizer.prototype = {
     }
 
     // process exceptions (exc)
-    this.open_file(pos, exc);
-    var exc_data = this.fetch_exc_data(pos);
+    var key_exc = pos + "_exc"; 
+    this.open_file(key_exc, exc);
+    var exc_data = this.fetch_exc_data(key_exc);
     var exc_len  = exc_data.length;
     for (var i = 0; i < exc_len; i++) {
       var w = exc_data[i][0];
       var s = exc_data[i][1];
+      //console.log(pos + " : " + w + " : " + s);
       this.exceptions[pos][w] = s;
     }
   },
 
-  open_file: function(pos, file) {
+  open_file: function(key, file) {
     var self = this;
     $.get(file, function(data){
-      self.store_exc_data(pos, data);
+      self.store_data(key, data);
     });
   },
 
-  store_idx_data: function(key, data) {
+  store_data: function(key, data) {
     localStorage[key] = data;
   },
 
   fetch_idx_data: function(key) {
     arr = localStorage[key].split(',');
     return arr;
-  },
-
-  store_exc_data: function(key, data) {
-    localStorage[key] = data;
   },
 
   fetch_exc_data: function(key) {
@@ -158,49 +153,90 @@ Lemmatizer.prototype = {
     }
     return arr;
   },
+  // end of set up dictionary data
 
-  each_lemma: function(form, pos, func) {
-    if (pos == "noun" && form.endsWith('ful')) {
-      each_lemma(form.slice(0, form.length-3), pos, this.ful_yield(func));
-    } else {
-      this.each_substitutions(form, pos, this.sub_yield);
+
+  // change implements not to use yield
+
+  base_form: function(form, pos) {
+    var result = null;
+    result = this.irregular_base(form, pos)
+    if (result) {
+      return result;
     }
+    result = this.regular_base(form, pos);
+    if (result != form) {
+      return result;
+    }
+    return null;
   },
 
-  ful_yield: function(x) {
-    /*
-    each_lemma(form[0, form.length-3], pos) do |x|
-      yield x + 'ful'
-    end
-
-    yield x + 'ful' should run each_lemma's block
-    */
-    this.return_x(x + 'ful');
+  irregular_base: function(form, pos) {
+    if (this.exceptions[pos][form]) {
+      return this.exceptions[pos][form];
+    }
+    return null;
   },
 
-  sub_yield: function(x) {
-    this.sub_yield(x);
+  regular_base: function(form, pos) {
+    // implement later
+    var result = null;
+    switch (pos){
+      case 'verb':
+        result = this.verb_base(form);
+        break;
+      case 'noun':
+        result = this.noun_base(form);
+        break;
+      case 'adj':
+        result = this.adj_base(form);
+        break;
+      case 'adv':
+        result = this.adv_base(form);
+        break;
+      default:
+        break;
+    }
+    if (result) {
+      return result;
+    }
+    return form;
   },
 
-  each_substitutions: function(form, pos, sub_yield) {
-    if (lemma = this.wordlists[pos][form]) {
-      this.sub_yield(lemma);
-    }
+  verb_base: function(form) {
+  },
 
-    for (var key in this.morphological_substitutions) {
-      var old_w = this.morphological_substitutions[key][0];
-      var new_w = this.morphological_substitutions[key][1];
-      if (form.endsWith(old_w)) {
-        this.each_substitutions(form.slice(0, form.length - old_w.length) + new_w, pos, this.sub_yield);
-      }
+  noun_base: function(form) {
+    // scoreless -> score
+    if (form.endsWith('less')) {
+      return form.slice(0, -4);
     }
+    // dishes -> dish
+    if ( form.endsWith('ses') || form.endsWith('xes') || form.endsWith('zes') || form.endsWith('shes') || form.endsWith('ches') ) {
+      return form.slice(0, -2);
+    }
+    // dogs -> dog
+    return form.slice(0, -1);
+  },
+
+  adj_base: function(form) {
+  },
+
+  adv_base: function(form) {
   },
 
   console_log: function(form, pos) {
+    var lemma = this.lemma(form, pos);
+    console.log(form + "'s base form is " + lemma);
   }
 };
 
 var lem = new Lemmatizer();
-var word = "talked";
-var word_lemma = lem.lemma(word);
-console.log(word + "'s base form is " + word_lemma);
+var form_word = "computers";
+var part_of_speech = "noun";
+
+console.log("--- with pos ----");
+lem.console_log(form_word, part_of_speech);
+
+console.log("--- without pos ----");
+lem.console_log(form_word);
