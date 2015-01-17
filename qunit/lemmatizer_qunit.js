@@ -32,7 +32,13 @@ QUnit.test( 'JavaScript Lemmatizer QUnit Tests', function( assert ) {
   assert.equal( lem.lemma('goes', 'verb'), 'go' );
   assert.equal( lem.lemma('went', 'verb'), 'go' );
   assert.equal( lem.lemma('gone', 'verb'), 'go' );
-  assert.equal( lem.lemma('acidless', 'noun'), 'acid' );
+  assert.equal( lem.lemma('writes', 'verb'), 'write' );
+  assert.equal( lem.lemma('wrote', 'verb'), 'write' );
+  assert.equal( lem.lemma('written', 'verb'), 'write' );
+  assert.equal( lem.lemma('confirms', 'verb'), 'confirm' );
+  assert.equal( lem.lemma('confirmed', 'verb'), 'confirm' );
+  assert.equal( lem.lemma('confirming', 'verb'), 'confirm' );
+  assert.equal( lem.lemma('acidless', 'noun'), 'acidless' );
   assert.equal( lem.lemma('pizzas', 'noun'), 'pizza' );
   assert.equal( lem.lemma('foxes', 'noun'), 'fox' );
   assert.equal( lem.lemma('hacked', 'verb'), 'hack' );
@@ -58,7 +64,7 @@ QUnit.test( 'JavaScript Lemmatizer QUnit Tests', function( assert ) {
   assert.equal( lem.lemma('teaches', 'verb'), 'teach' );
   assert.equal( lem.lemma('goes', 'verb'), 'go' );
   assert.equal( lem.lemma('talked', 'verb'), 'talk' );
-  assert.equal( lem.lemma('taked', 'verb'), 'take' );
+  assert.equal( lem.lemma('saved', 'verb'), 'save' );
   assert.equal( lem.lemma('sitting', 'verb'), 'sit' );
   assert.equal( lem.lemma('having', 'verb'), 'have' );
   assert.equal( lem.lemma('talking', 'verb'), 'talk' );
@@ -70,7 +76,7 @@ QUnit.test( 'JavaScript Lemmatizer QUnit Tests', function( assert ) {
   assert.equal( lem.lemma('readable', 'adj'), 'readable' );
   assert.equal( lem.lemma('readability', 'noun'), 'readability' );
   assert.equal( lem.lemma('writability', 'noun'), 'writability' );
-  assert.equal( lem.lemma('scoreless', 'noun'), 'score' );
+  assert.equal( lem.lemma('scoreless', 'noun'), 'scoreless' );
   assert.equal( lem.lemma('dogs', 'noun'), 'dog' );
   assert.equal( lem.lemma('dishes', 'noun'), 'dish' );
   assert.equal( lem.lemma('heaviest', 'adj'), 'heavy' );
@@ -85,7 +91,13 @@ QUnit.test( 'JavaScript Lemmatizer QUnit Tests', function( assert ) {
   assert.equal( lem.lemma('goes'), 'go' );
   assert.equal( lem.lemma('went'), 'go' );
   assert.equal( lem.lemma('gone'), 'go' );
-  assert.equal( lem.lemma('acidless'), 'acid' );
+  assert.equal( lem.lemma('writes'), 'write' );
+  assert.equal( lem.lemma('wrote'), 'write' );
+  assert.equal( lem.lemma('written'), 'write' );
+  assert.equal( lem.lemma('confirms'), 'confirm' );
+  assert.equal( lem.lemma('confirmed'), 'confirm' );
+  assert.equal( lem.lemma('confirming'), 'confirm' );
+  assert.equal( lem.lemma('acidless'), 'acidless' );
   assert.equal( lem.lemma('pizzas'), 'pizza' );
   assert.equal( lem.lemma('foxes'), 'fox' );
   assert.equal( lem.lemma('hacked'), 'hack' );
@@ -111,7 +123,7 @@ QUnit.test( 'JavaScript Lemmatizer QUnit Tests', function( assert ) {
   assert.equal( lem.lemma('teaches'), 'teach' );
   assert.equal( lem.lemma('goes'), 'go' );
   assert.equal( lem.lemma('talked'), 'talk' );
-  assert.equal( lem.lemma('taked'), 'take' );
+  assert.equal( lem.lemma('saved'), 'save' );
   assert.equal( lem.lemma('sitting'), 'sit' );
   assert.equal( lem.lemma('having'), 'have' );
   assert.equal( lem.lemma('talking'), 'talk' );
@@ -123,7 +135,7 @@ QUnit.test( 'JavaScript Lemmatizer QUnit Tests', function( assert ) {
   assert.equal( lem.lemma('readable'), 'readable' );
   assert.equal( lem.lemma('readability'), 'readability' );
   assert.equal( lem.lemma('writability'), 'writability' );
-  assert.equal( lem.lemma('scoreless'), 'score' );
+  assert.equal( lem.lemma('scoreless'), 'scoreless' );
   assert.equal( lem.lemma('dogs'), 'dog' );
   assert.equal( lem.lemma('dishes'), 'dish' );
   assert.equal( lem.lemma('heaviest'), 'heavy' );

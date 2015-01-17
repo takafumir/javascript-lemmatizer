@@ -257,10 +257,10 @@ Lemmatizer.prototype = {
         lemmas.push(form.slice(0, -2));
       }
     } else if (form.endsWith('ed')) {
+      // saved -> save
+      lemmas.push(form.slice(0, -1));
       // talked -> talk
       lemmas.push(form.slice(0, -2));
-      // taked -> take
-      lemmas.push(form.slice(0, -1));
     } else if (form.endsWith('ing')) {
       if (this.double_consonant('ing')) {
         // sitting -> sit
@@ -271,46 +271,13 @@ Lemmatizer.prototype = {
       // talking -> talk
       lemmas.push(form.slice(0, -3));
     }
-    /* acts like ruby-lemmatizer when comment out
-    else if (form.endsWith('er')) {
-      if (form.endsWith('ier')) {
-        // heavier -> heavy
-        lemmas.push(form.slice(0, -3) + 'y');
-      } else if (this.double_consonant('er')) {
-        // bigger -> big
-        lemmas.push(form.slice(0, -3));
-      }
-      // huger -> huge
-      lemmas.push(form.slice(0, -1));
-      // lower -> low
-      lemmas.push(form.slice(0, -2));
-    }
-    else if (form.endsWith('able')) {
-      // writable -> write
-      lemmas.push(form.slice(0, -4) + 'e');
-      // readable -> read
-      lemmas.push(form.slice(0, -4));
-    } else if (form.endsWith('ability')) {
-      if (this.double_consonant('ability')) {
-        // resettability -> reset
-        lemmas.push(form.slice(0, -8));
-      }
-      // readability -> read
-      lemmas.push(form.slice(0, -7));
-      // writability -> write
-      lemmas.push(form.slice(0, -7) + 'e');
-    }
-    */
     return [ lemmas, 'verb' ];
   },
 
   noun_bases: function() {
     var form = this.form;
     var lemmas = [];
-    if (form.endsWith('less')) {
-      // scoreless -> score
-      lemmas.push(form.slice(0, -4));
-    } else if (form.endsWith('s')) {
+    if (form.endsWith('s')) {
       // dogs -> dog
       lemmas.push(form.slice(0, -1));
       if ( this.is_end_with_es() ) {
