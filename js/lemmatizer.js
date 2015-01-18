@@ -218,6 +218,7 @@ Lemmatizer.prototype = {
     return null;
   },
 
+  // change to return array lemmas
   irregular_base: function(pos) {
     if (this.exceptions[pos][this.form]) {
       return this.exceptions[pos][this.form];
@@ -225,6 +226,7 @@ Lemmatizer.prototype = {
     return null;
   },
 
+  // change to return array lemmas
   regular_base: function(pos) {
     var bases = null;
     // bases -> [ [lemma1, lemma2, lemma3...], pos ]
@@ -253,6 +255,7 @@ Lemmatizer.prototype = {
     return null;
   },
 
+  // change to return array lemmas
   get_lemma: function(bases) {
     // bases -> [ [lemma1, lemma2, lemma3...], pos ]
     var pos = bases[1];
