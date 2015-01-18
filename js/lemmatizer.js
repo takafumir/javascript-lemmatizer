@@ -360,7 +360,7 @@ Lemmatizer.prototype = {
     }
   },
 
-  // for debug
+  // for debug to use like $('#lem-confirm').html( lem.confirm_dic('exc') )
   confirm_dic: function(type) {
     var words = null;
     if (type == 'exc') {
