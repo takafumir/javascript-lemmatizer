@@ -361,19 +361,25 @@ Lemmatizer.prototype = {
   },
 
   // for debug
-  confirm_exceptions: function() {
-    var html = '';
+  confirm_dic: function(type) {
+    var words = null;
+    if (type == 'exc') {
+      words = this.exceptions;
+    } else if (type == 'idx') {
+      words = this.wordlists;
+    }
+    var html = '*** ' + type + ' ***<br />';
     var parts = ['verb', 'noun', 'adj', 'adv'];
     var len = parts.length;
     for (var i = 0; i < len; i++) {
       var pos = parts[i];
       var pos_comment = '--- ' + pos + ' ---<br />';
       var html = html + pos_comment;
-      for (var w in this.exceptions[pos]) {
-        var item = w + ' -> ' + this.exceptions[pos][w] + '<br />';
+      for (var w in words[pos]) {
+        var item = w + ' -> ' + words[pos][w] + '<br />';
         var html = html + item;
       }
     }
     return html;
-  },
+  }
 };
