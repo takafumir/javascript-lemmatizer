@@ -7,6 +7,22 @@
 <body>
   <script src="jquery-1.11.2.js"></script>
   <script src="lemmatizer.js"></script>
+  <script type="text/javascript">
+    var lem = new Lemmatizer();
+    var form_word = 'written';
+    var part_of_speech = 'verb';
+
+    console.log('--- with pos ----');
+    lem.console_log(form_word, part_of_speech);
+
+    console.log('--- without pos ----');
+    lem.console_log(form_word);
+
+		$(document).ready( function() {
+      $('#lem-exceptions').html( lem.confirm_exceptions() );
+    });
+  </script>
 	
+  <div id="lem-exceptions"></div>
 </body>
 </html>

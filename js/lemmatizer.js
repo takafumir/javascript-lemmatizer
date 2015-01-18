@@ -1,3 +1,8 @@
+// define String#endsWith
+String.prototype.endsWith = function(suffix) {
+  return this.indexOf(suffix, this.length - suffix.length) !== -1;
+};
+
 // Lemmatizer constructor
 var Lemmatizer = function() {
   this.wn_files = {
@@ -55,19 +60,30 @@ var Lemmatizer = function() {
   this.wordlists  = {};
   this.exceptions = {};
 
+  // initialize wordlists and exceptions
   for (var key in this.morphological_substitutions) {
     this.wordlists[key] = {};
     this.exceptions[key] = {};
   }
 
+  // store dictionary data to localStorage from wn_files
   for (var pos in this.wn_files) {
     this.load_wordnet_files(pos, this.wn_files[pos][0], this.wn_files[pos][1]);
   }
+
+  // fetch dictionary data from localStorage, then set up wordlists and exceptions
+  //setTimeout( function() {
+    for (var pos in this.wn_files) {
+      this.setup_dic_data(pos);
+    }
+  //}, 300);
 };
 
 // Lemmatizer properties
 Lemmatizer.prototype = {
   form: '',
+  idx: '_idx',
+  exc: '_exc',
 
   // public
   lemma: function(form, pos) {
@@ -81,21 +97,13 @@ Lemmatizer.prototype = {
     if (!pos) {
       var parts = ['verb', 'noun', 'adj', 'adv'];
       var len = parts.length;
-      // search irregular base
+      // find irregular base
       for (var i = 0; i < len; i++) {
         if (result = this.irregular_base(parts[i])) {
           return result;
         }
       }
-      /* acts like ruby-lemmatizer when comment out
-      // when form is lemma
-      for (var i = 0; i < len; i++) {
-        if (result = this.wordlists[parts[i]][this.form]) {
-          return result;
-        }
-      }
-      */
-      // search regular base
+      // find regular base
       for (var i = 0; i < len; i++) {
         if (result = this.regular_base(parts[i])) {
           if ( result != this.form ) {
@@ -113,13 +121,28 @@ Lemmatizer.prototype = {
     return form;
   },
 
+  // to confirm
+  console_log: function(form, pos) {
+    var lemma = this.lemma(form, pos);
+    console.log("The base form of '" + form + "' is " + lemma);
+  },
+
+  // **************************************************
   // private
-  // The following methods are only used by Lemmatizer inside, so don't call them from outside.
+  // The following properties(methods) are only used by
+  // Lemmatizer inside, so don't call them from outside.
+  // **************************************************
   // set up dictionary data
   load_wordnet_files: function(pos, list, exc) {
-    // process wordlists (list)
-    var key_idx = pos + '_idx';
+    var key_idx = pos + this.idx;
     this.open_file(key_idx, list);
+
+    var key_exc = pos + this.exc; 
+    this.open_file(key_exc, exc);
+  },
+
+  setup_dic_data: function(pos) {
+    var key_idx = pos + this.idx;
     var idx_data = this.fetch_idx_data(key_idx);
     var idx_len  = idx_data.length;
     for (var i = 0; i < idx_len; i++) {
@@ -127,9 +150,7 @@ Lemmatizer.prototype = {
       this.wordlists[pos][w] = w;
     }
 
-    // process exceptions (exc)
-    var key_exc = pos + '_exc'; 
-    this.open_file(key_exc, exc);
+    var key_exc = pos + this.exc; 
     var exc_data = this.fetch_exc_data(key_exc);
     var exc_len  = exc_data.length;
     for (var i = 0; i < exc_len; i++) {
@@ -173,20 +194,12 @@ Lemmatizer.prototype = {
   },
   // end of set up dictionary data
 
-
-  // change implements not to use yield
-
   base_form: function(pos) {
     var result = null;
     result = this.irregular_base(pos)
     if (result) {
       return result;
     }
-    /* acts like ruby-lemmatizer when comment out
-    if (result = this.wordlists[pos][this.form]) {
-      return result;
-    }
-    */
     result = this.regular_base(pos);
     if ( result && (result != this.form) ) {
       return result;
@@ -229,7 +242,7 @@ Lemmatizer.prototype = {
     return null;
   },
 
-  get_lemma(bases) {
+  get_lemma: function(bases) {
     // bases -> [ [lemma1, lemma2, lemma3...], pos ]
     var pos = bases[1];
     var lemmas_len = bases[0].length;
@@ -347,21 +360,20 @@ Lemmatizer.prototype = {
     }
   },
 
-  // to confirm
-  console_log: function(form, pos) {
-    var lemma = this.lemma(form, pos);
-    console.log(form + "'s base form is " + lemma);
-  }
+  // for debug
+  confirm_exceptions: function() {
+    var html = '';
+    var parts = ['verb', 'noun', 'adj', 'adv'];
+    var len = parts.length;
+    for (var i = 0; i < len; i++) {
+      var pos = parts[i];
+      var pos_comment = '--- ' + pos + ' ---<br />';
+      var html = html + pos_comment;
+      for (var w in this.exceptions[pos]) {
+        var item = w + ' -> ' + this.exceptions[pos][w] + '<br />';
+        var html = html + item;
+      }
+    }
+    return html;
+  },
 };
-
-/*
-var lem = new Lemmatizer();
-var form_word = 'readdability';
-var part_of_speech = 'verb';
-
-console.log('--- with pos ----');
-lem.console_log(form_word, part_of_speech);
-
-console.log('--- without pos ----');
-lem.console_log(form_word);
-*/
