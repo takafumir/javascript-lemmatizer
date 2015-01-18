@@ -72,11 +72,9 @@ var Lemmatizer = function() {
   }
 
   // fetch dictionary data from localStorage, then set up wordlists and exceptions
-  //setTimeout( function() {
-    for (var pos in this.wn_files) {
-      this.setup_dic_data(pos);
-    }
-  //}, 300);
+  for (var pos in this.wn_files) {
+    this.setup_dic_data(pos);
+  }
 };
 
 // Lemmatizer properties
@@ -161,10 +159,23 @@ Lemmatizer.prototype = {
   },
 
   open_file: function(key, file) {
-    var self = this;
-    $.get(file, function(data){
-      self.store_data(key, data);
-    });
+    if (!localStorage[key]) {
+      var self = this;
+      // when using async ajax, localStorage[key] return undefined at first. (186)
+      // $.get(file, function(data){
+      //   self.store_data(key, data);
+      // });
+
+      // so use sync networking only at the first time.
+      $.ajax({
+        url: file,
+        type: 'get',
+        async: false,
+        success: function(data) {
+          self.store_data(key, data);
+        }
+      });
+    }
   },
 
   store_data: function(key, data) {
