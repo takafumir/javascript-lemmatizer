@@ -82,9 +82,10 @@ Lemmatizer.prototype = {
   form: '',
   idx: '_idx',
   exc: '_exc',
+  lems: [],
 
   // public
-  lemma: function(form, pos) {
+  lemmas: function(form, pos) {
     this.form = form;
     var result = null;
 
@@ -95,34 +96,25 @@ Lemmatizer.prototype = {
     if (!pos) {
       var parts = ['verb', 'noun', 'adj', 'adv'];
       var len = parts.length;
-      // find irregular base
+      // colelct irregular bases
       for (var i = 0; i < len; i++) {
-        if (result = this.irregular_base(parts[i])) {
-          return result;
-        }
+        this.irregular_bases(parts[i]);
       }
-      // find regular base
+      // collect regular bases
       for (var i = 0; i < len; i++) {
-        if (result = this.regular_base(parts[i])) {
-          if ( result != this.form ) {
-            return result;
-          }
-        }
+        this.regular_bases(parts[i]);
       }
-      return form;
+    } else {
+      this.base_forms(pos);
     }
 
-    if (result = this.base_form(pos)) {
-      return result;
-    }
-
-    return form;
+    return this.lems;
   },
 
   // to confirm
   console_log: function(form, pos) {
-    var lemma = this.lemma(form, pos);
-    console.log("The base form of '" + form + "' is " + lemma);
+    var lemmas = this.lemmas(form, pos);
+    console.log("The base form of '" + form + "' is " + lemmas);
   },
 
   // **************************************************
@@ -205,29 +197,20 @@ Lemmatizer.prototype = {
   },
   // end of set up dictionary data
 
-  base_form: function(pos) {
-    var result = null;
-    result = this.irregular_base(pos)
-    if (result) {
-      return result;
-    }
-    result = this.regular_base(pos);
-    if ( result && (result != this.form) ) {
-      return result;
-    }
-    return null;
+  base_forms: function(pos) {
+    this.irregular_bases(pos);
+    this.regular_bases(pos);
   },
 
-  // change to return array lemmas
-  irregular_base: function(pos) {
+  // build array lemmas(this.lems) like [ [lemma1, "verb"], [lemma2, "noun"]... ]
+  irregular_bases: function(pos) {
     if (this.exceptions[pos][this.form]) {
-      return this.exceptions[pos][this.form];
+      this.lems.push( [this.exceptions[pos][this.form], pos] );
     }
-    return null;
   },
 
-  // change to return array lemmas
-  regular_base: function(pos) {
+  // build array lemmas(this.lems) like [ [lemma1, "verb"], [lemma2, "noun"]... ]
+  regular_bases: function(pos) {
     var bases = null;
     // bases -> [ [lemma1, lemma2, lemma3...], pos ]
     switch (pos){
@@ -247,26 +230,21 @@ Lemmatizer.prototype = {
         break;
     }
     if (bases) {
-      var result = this.get_lemma(bases);
+      this.regular_lemmas(bases);
     }
-    if (result) {
-      return result;
-    }
-    return null;
   },
 
-  // change to return array lemmas
-  get_lemma: function(bases) {
+  // return array lemmas like [ [lemma1, "verb"], [lemma2, "noun"]... ]
+  regular_lemmas: function(bases) {
     // bases -> [ [lemma1, lemma2, lemma3...], pos ]
     var pos = bases[1];
     var lemmas_len = bases[0].length;
     for (var i = 0; i < lemmas_len; i++) {
       var lemma = bases[0][i];
       if ( this.wordlists[pos][lemma] && (this.wordlists[pos][lemma] == lemma) ) {
-        return lemma;
+        this.lems.push( [lemma, pos] );
       }
     }
-    return null;
   },
 
   verb_bases: function() {
