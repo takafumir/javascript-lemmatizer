@@ -5,13 +5,14 @@
 	<title></title>
 </head>
 <body>
-  <script src="jquery.js"></script>
-  <script src="underscore.js"></script>
-  <script src="lemmatizer.js"></script>
+  <script src="../vendor/js/jquery.js"></script>
+  <script src="../vendor/js/underscore.js"></script>
+  <script src="../js/lemmatizer.js"></script>
+
   <script type="text/javascript">
     var lem = new Lemmatizer();
-    var form_word = 'leaves';
-    var part_of_speech = 'verb';
+    var form_word = 'higher';
+    var part_of_speech = 'noun';
 
     console.log('--- with pos ----');
     lem.console_log(form_word, part_of_speech);
@@ -19,10 +20,12 @@
     console.log('--- without pos ----');
     lem.console_log(form_word);
 
+    // Uncomment the following code to display dictionary data.
+    // Be careful the dictionary data is large, so it'll take a long time to display the data.
     /*
 		$(document).ready( function() {
       $('#lem-confirm').html( lem.confirm_dic('exc') );
-      //$('#lem-confirm').html( lem.confirm_dic('idx') );
+      // $('#lem-confirm').html( lem.confirm_dic('idx') ); // index data is much larger than excptions data.
     });
     */
   </script>

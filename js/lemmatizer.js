@@ -82,12 +82,13 @@ Lemmatizer.prototype = {
   form: '',
   idx: '_idx',
   exc: '_exc',
-  lems: [],
+  lems: [], // -> like [ [lemma1, "verb"], [lemma2, "noun"]... ]
 
   // public
   lemmas: function(form, pos) {
+    var self = this;
+    this.lems = [];
     this.form = form;
-    var result = null;
 
     if (typeof pos === 'undefined') {
       pos = null;
@@ -104,17 +105,32 @@ Lemmatizer.prototype = {
       for (var i = 0; i < len; i++) {
         this.regular_bases(parts[i]);
       }
+      // when the form is included in wordlists
+      if (this.lems.length == 0) {
+        _.chain(parts)
+         .select( function(pos) { return self.wordlists[pos][form] } )
+         .each( function(pos) { self.lems.push([ form, pos ]) } );
+      }
+      // when the form is not included in wordlists
+      if (this.lems.length == 0) {
+        this.lems.push([ form, '' ]);
+      }
     } else {
       this.base_forms(pos);
+      if (this.lems.length == 0) {
+        this.lems.push([ form, pos ]);
+      }
     }
 
-    return this.lems;
+    return _.sortBy( this.uniq_lemmas(this.lems), function(val) { return val[1]; } ).reverse();
   },
 
   // to confirm
   console_log: function(form, pos) {
     var lemmas = this.lemmas(form, pos);
-    console.log("The base form of '" + form + "' is " + lemmas);
+    _.each(lemmas , function(val) {
+      console.log("The base form of '" + form + "' is '" + val[0] + "' as " + val[1]);
+    });
   },
 
   // **************************************************
@@ -238,10 +254,11 @@ Lemmatizer.prototype = {
   regular_lemmas: function(bases) {
     // bases -> [ [lemma1, lemma2, lemma3...], pos ]
     var pos = bases[1];
+    var lemmas = bases[0];
     var lemmas_len = bases[0].length;
     for (var i = 0; i < lemmas_len; i++) {
-      var lemma = bases[0][i];
-      if ( this.wordlists[pos][lemma] && (this.wordlists[pos][lemma] == lemma) ) {
+      var lemma = lemmas[i];
+      if ( this.wordlists[pos][lemma] && this.wordlists[pos][lemma] == lemma && lemma != this.form ) {
         this.lems.push( [lemma, pos] );
       }
     }
@@ -276,6 +293,9 @@ Lemmatizer.prototype = {
       // talking -> talk
       lemmas.push(form.slice(0, -3));
     }
+    if (lemmas.length == 0) {
+      lemmas.push(form);
+    }
     return [ lemmas, 'verb' ];
   },
 
@@ -289,6 +309,9 @@ Lemmatizer.prototype = {
         // dishes -> dish
         lemmas.push(form.slice(0, -2));
       }
+    }
+    if (lemmas.length == 0) {
+      lemmas.push(form);
     }
     return [ lemmas, 'noun' ];
   },
@@ -321,6 +344,9 @@ Lemmatizer.prototype = {
       // lower -> low
       lemmas.push(form.slice(0, -2));
     }
+    if (lemmas.length == 0) {
+      lemmas.push(form);
+    }
     return [ lemmas, pos ];
   },
 
@@ -350,6 +376,30 @@ Lemmatizer.prototype = {
     } else {
       return false;
     }
+  },
+
+  // var arr = [ ["leave", "verb"], ["leaf", "noun"], ["leave", "verb"], ["leave", "noun"] ];
+  // var u_arr = this.uniq_lemmas(arr);
+  uniq_lemmas: function(lemmas) {
+    var u_lemmas = [];
+    var len = lemmas.length;
+    for (var i = 0; i < len; i++) {
+      var val = lemmas[i];
+      if (!this.is_include(u_lemmas, val)) {
+        u_lemmas.push(val);
+      }
+    }
+    return u_lemmas;
+  },
+
+  is_include: function(lemmas, target) {
+    var len = lemmas.length;
+    for (var i = 0; i < len; i++) {
+      if (lemmas[i][0] == target[0] && lemmas[i][1] == target[1]) {
+        return true;
+      }
+    }
+    return false;
   },
 
   // for debug to use like $('#lem-confirm').html( lem.confirm_dic('exc') )
