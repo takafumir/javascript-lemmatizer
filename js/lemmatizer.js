@@ -82,7 +82,7 @@ Lemmatizer.prototype = {
   form: '',
   idx: '_idx',
   exc: '_exc',
-  lems: [], // -> like [ [lemma1, "verb"], [lemma2, "noun"]... ]
+  lems: [], // -> [ [lemma1, "verb"], [lemma2, "noun"]... ]
 
   // public
   lemmas: function(form, pos) {
@@ -121,6 +121,7 @@ Lemmatizer.prototype = {
     return _.sortBy( this.uniq_lemmas(this.lems), function(val) { return val[1]; } ).reverse();
   },
 
+  // return only uniq lemmas without pos like [ 'high' ] or [ 'leave', 'leaf' ]
   only_lemmas: function(form, pos) {
     var result = _.map( this.lemmas(form, pos), function(val) { return val[0]; } );
     return _.uniq(result);

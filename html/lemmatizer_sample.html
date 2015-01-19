@@ -14,13 +14,13 @@
     var form = 'leaves';
     var pos = 'noun';
 
+    console.log("***** Lemmatizer#lemmas *****");
     console.log('--- with pos ----');
     lem.console_log(form, pos);
-
     console.log('--- without pos ----');
     lem.console_log(form);
 
-    console.log("***** only lemmas *****");
+    console.log("***** Lemmatizer#only_lemmas *****");
     console.log('--- with pos ----');
     console.log( lem.only_lemmas(form, pos) );
     console.log('--- without pos ----');
