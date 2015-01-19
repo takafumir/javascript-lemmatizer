@@ -1,9 +1,8 @@
 var lem = new Lemmatizer();
 
 QUnit.test( 'JavaScript Lemmatizer QUnit Tests', function( assert ) {
-  // lem.lemmas() return array result like [ [lemma1, verb], [lemma2, noun]... ],
+  // lem.lemmas() return array result like [ [lemma1, verb], [lemma2, noun], ... ],
   // so define custome assertion method.
-  // use like assert_equal_lemmas( lem.lemmas('analyses', 'noun'),  [ [ "analysis", "noun" ] ] );
   function assert_equal_lemmas(actual, expected) {
     var act_len = actual.length;
     var exp_len = expected.length;
@@ -12,6 +11,19 @@ QUnit.test( 'JavaScript Lemmatizer QUnit Tests', function( assert ) {
       for (var i = 0; i < act_len; i++) {
        assert.equal( actual[i][0], expected[i][0] );
        assert.equal( actual[i][1], expected[i][1] );
+      }
+    }
+  }
+
+  // lem.only_lemmas() return array result like [ lemma1, lemma2, ... ],
+  // so define custome assertion method.
+  function assert_equal_only_lemmas(actual, expected) {
+    var act_len = actual.length;
+    var exp_len = expected.length;
+    assert.equal( act_len, exp_len );
+    if (act_len == exp_len) {
+      for (var i = 0; i < act_len; i++) {
+       assert.equal( actual[i], expected[i] );
       }
     }
   }
@@ -98,6 +110,7 @@ QUnit.test( 'JavaScript Lemmatizer QUnit Tests', function( assert ) {
   assert_equal_lemmas( lem.lemmas('bigger', 'adj'), [ ['big', 'adj'] ] );
   assert_equal_lemmas( lem.lemmas('lower', 'adj'), [ ['low', 'adj'] ] );
   assert_equal_lemmas( lem.lemmas('higher', 'adj'), [ ['high', 'adj'] ] );
+  assert_equal_lemmas( lem.lemmas('leaves', 'noun'), [ ['leave', 'noun'], ['leaf', 'noun'] ] );
 
   // various test without pos
   assert_equal_lemmas( lem.lemmas('goes'), [ ['go', 'verb'], ['go', 'noun'] ] );
@@ -157,5 +170,152 @@ QUnit.test( 'JavaScript Lemmatizer QUnit Tests', function( assert ) {
   assert_equal_lemmas( lem.lemmas('bigger'), [ ['big', 'adv'], ['big', 'adj'] ] );
   assert_equal_lemmas( lem.lemmas('lower'), [ ['low', 'adv'], ['low', 'adj'] ] );
   assert_equal_lemmas( lem.lemmas('higher'), [ ['high', 'adv'], ['high', 'adj'] ] );
+  assert_equal_lemmas( lem.lemmas('leaves'), [ ['leave', 'verb'], ['leave', 'noun'], ['leaf', 'noun'] ] );
+
+
+  // only_lemmas tests
+  assert_equal_only_lemmas( lem.only_lemmas('analyses', 'noun'), [ 'analysis' ] );
+
+  // Lemmatizer leaves alone words that its dictionary does not contain.
+  assert_equal_only_lemmas( lem.only_lemmas('MacBooks', 'noun'), [ 'MacBooks' ] );
+
+  // Lemmatize a word with a part of speech (pos).
+  assert_equal_only_lemmas( lem.only_lemmas('desks', 'noun'), [ 'desk' ] );
+  assert_equal_only_lemmas( lem.only_lemmas('hired', 'verb'), [ 'hire' ] );
+  assert_equal_only_lemmas( lem.only_lemmas('worried', 'verb'), [ 'worry' ]);
+  assert_equal_only_lemmas( lem.only_lemmas('partying', 'verb'), [ 'party' ]);
+  assert_equal_only_lemmas( lem.only_lemmas('better', 'adj'), ['good'] );
+  assert_equal_only_lemmas( lem.only_lemmas('hotter', 'adj'), ['hot']  );
+  assert_equal_only_lemmas( lem.only_lemmas('best', 'adv'), [ 'well'] );
+  assert_equal_only_lemmas( lem.only_lemmas('best', 'adj'), [ 'good'] );
+  
+  // Lemmatizer give a result even when no pos is given, by assuming it to be :verb, :noun, :adv, or :adj.
+  assert_equal_only_lemmas( lem.only_lemmas('plays'), [ 'play' ] );
+  assert_equal_only_lemmas( lem.only_lemmas('oxen'), [ 'ox' ] );
+  assert_equal_only_lemmas( lem.only_lemmas('fired'), [ 'fire' ] );
+  assert_equal_only_lemmas( lem.only_lemmas('slower'), [ 'slow' ] );
+
+  // non-existing word
+  assert_equal_only_lemmas( lem.only_lemmas('asdfassda'), [ 'asdfassda' ] );
+
+  // various test with pos
+  assert_equal_only_lemmas( lem.only_lemmas('goes', 'verb'), [ 'go' ] );
+  assert_equal_only_lemmas( lem.only_lemmas('went', 'verb'), [ 'go' ] );
+  assert_equal_only_lemmas( lem.only_lemmas('gone', 'verb'), [ 'go' ] );
+  assert_equal_only_lemmas( lem.only_lemmas('writes', 'verb'), [ 'write' ] );
+  assert_equal_only_lemmas( lem.only_lemmas('wrote', 'verb'), [ 'write' ] );
+  assert_equal_only_lemmas( lem.only_lemmas('written', 'verb'), [ 'write' ] );
+  assert_equal_only_lemmas( lem.only_lemmas('confirms', 'verb'), [ 'confirm' ] );
+  assert_equal_only_lemmas( lem.only_lemmas('confirmed', 'verb'), [ 'confirm' ] );
+  assert_equal_only_lemmas( lem.only_lemmas('confirming', 'verb'), [ 'confirm' ] );
+  assert_equal_only_lemmas( lem.only_lemmas('acidless', 'noun'), [ 'acidless' ] );
+  assert_equal_only_lemmas( lem.only_lemmas('pizzas', 'noun'), [ 'pizza' ] );
+  assert_equal_only_lemmas( lem.only_lemmas('foxes', 'noun'), [ 'fox' ] );
+  assert_equal_only_lemmas( lem.only_lemmas('hacked', 'verb'), [ 'hack' ] );
+  assert_equal_only_lemmas( lem.only_lemmas('coded', 'verb'), [ 'cod', 'code' ] );
+  assert_equal_only_lemmas( lem.only_lemmas('fitting', 'verb'), [ 'fit' ] );
+  assert_equal_only_lemmas( lem.only_lemmas('coding', 'verb'), [ 'cod', 'code' ] );
+  assert_equal_only_lemmas( lem.only_lemmas('pirouetting', 'verb'), [ 'pirouette' ] );
+  assert_equal_only_lemmas( lem.only_lemmas('hacking', 'verb'), [ 'hack' ] );
+  assert_equal_only_lemmas( lem.only_lemmas('earliest', 'adj'), [ 'early' ] );
+  assert_equal_only_lemmas( lem.only_lemmas('biggest', 'adj'), [ 'big' ] );
+  assert_equal_only_lemmas( lem.only_lemmas('largest', 'adj'), [ 'large' ] );
+  assert_equal_only_lemmas( lem.only_lemmas('smallest', 'adj'), [ 'small' ] );
+  assert_equal_only_lemmas( lem.only_lemmas('earlier', 'adj'), [ 'early' ] );
+  assert_equal_only_lemmas( lem.only_lemmas('bigger', 'adj'), [ 'big' ] );
+  assert_equal_only_lemmas( lem.only_lemmas('larger', 'adj'), [ 'large' ] );
+  assert_equal_only_lemmas( lem.only_lemmas('smaller', 'adj'), [ 'small' ] );
+  assert_equal_only_lemmas( lem.only_lemmas('recognizable', 'adj'), [ 'recognizable' ] );
+  assert_equal_only_lemmas( lem.only_lemmas('networkable', 'adj'), [ 'networkable' ] );
+  assert_equal_only_lemmas( lem.only_lemmas('resettability', 'noun'), [ 'resettability' ] );
+  assert_equal_only_lemmas( lem.only_lemmas('repairability', 'noun'), [ 'repairability' ] );
+  assert_equal_only_lemmas( lem.only_lemmas('reorganizability', 'noun'), [ 'reorganizability' ] );
+  assert_equal_only_lemmas( lem.only_lemmas('starts', 'verb'), [ 'start' ] );
+  assert_equal_only_lemmas( lem.only_lemmas('teaches', 'verb'), [ 'teach' ] );
+  assert_equal_only_lemmas( lem.only_lemmas('talked', 'verb'), [ 'talk' ] );
+  assert_equal_only_lemmas( lem.only_lemmas('saved', 'verb'), [ 'save' ] );
+  assert_equal_only_lemmas( lem.only_lemmas('sitting', 'verb'), [ 'sit' ] );
+  assert_equal_only_lemmas( lem.only_lemmas('having', 'verb'), [ 'have' ] );
+  assert_equal_only_lemmas( lem.only_lemmas('talking', 'verb'), [ 'talk' ] );
+  assert_equal_only_lemmas( lem.only_lemmas('heavier', 'adj'), [ 'heavy' ] );
+  assert_equal_only_lemmas( lem.only_lemmas('bigger', 'adj'), [ 'big' ] );
+  assert_equal_only_lemmas( lem.only_lemmas('huger', 'adj'), [ 'huge' ] );
+  assert_equal_only_lemmas( lem.only_lemmas('lower', 'adj'), [ 'low' ] );
+  assert_equal_only_lemmas( lem.only_lemmas('writable', 'adj'), [ 'writable' ] );
+  assert_equal_only_lemmas( lem.only_lemmas('readable', 'adj'), [ 'readable' ] );
+  assert_equal_only_lemmas( lem.only_lemmas('readability', 'noun'), [ 'readability' ] );
+  assert_equal_only_lemmas( lem.only_lemmas('writability', 'noun'), [ 'writability' ] );
+  assert_equal_only_lemmas( lem.only_lemmas('scoreless', 'noun'), [ 'scoreless' ] );
+  assert_equal_only_lemmas( lem.only_lemmas('dogs', 'noun'), [ 'dog' ] );
+  assert_equal_only_lemmas( lem.only_lemmas('dishes', 'noun'), [ 'dish' ] );
+  assert_equal_only_lemmas( lem.only_lemmas('heaviest', 'adj'), [ 'heavy' ] );
+  assert_equal_only_lemmas( lem.only_lemmas('biggest', 'adj'), [ 'big' ] );
+  assert_equal_only_lemmas( lem.only_lemmas('hugest', 'adj'), [ 'huge' ] );
+  assert_equal_only_lemmas( lem.only_lemmas('lowest', 'adj'), [ 'low' ] );
+  assert_equal_only_lemmas( lem.only_lemmas('heavier', 'adj'), [ 'heavy' ] );
+  assert_equal_only_lemmas( lem.only_lemmas('bigger', 'adj'), [ 'big' ] );
+  assert_equal_only_lemmas( lem.only_lemmas('lower', 'adj'), [ 'low' ] );
+  assert_equal_only_lemmas( lem.only_lemmas('higher', 'adj'), [ 'high' ] );
+  assert_equal_only_lemmas( lem.only_lemmas('leaves', 'noun'), [ 'leave', 'leaf' ] );
+
+  // various test without pos
+  assert_equal_only_lemmas( lem.only_lemmas('goes'), [ 'go' ] );
+  assert_equal_only_lemmas( lem.only_lemmas('went'), [ 'go' ] );
+  assert_equal_only_lemmas( lem.only_lemmas('gone'), [ 'go' ] );
+  assert_equal_only_lemmas( lem.only_lemmas('writes'), [ 'write' ] );
+  assert_equal_only_lemmas( lem.only_lemmas('wrote'), [ 'write' ] );
+  assert_equal_only_lemmas( lem.only_lemmas('written'), [ 'write' ] );
+  assert_equal_only_lemmas( lem.only_lemmas('confirms'), [ 'confirm' ] );
+  assert_equal_only_lemmas( lem.only_lemmas('confirmed'), [ 'confirm' ] );
+  assert_equal_only_lemmas( lem.only_lemmas('confirming'), [ 'confirm' ] );
+  assert_equal_only_lemmas( lem.only_lemmas('acidless'), [ 'acidless' ] );
+  assert_equal_only_lemmas( lem.only_lemmas('pizzas'), [ 'pizza' ] );
+  assert_equal_only_lemmas( lem.only_lemmas('foxes'), [ 'fox' ] );
+  assert_equal_only_lemmas( lem.only_lemmas('hacked'), [ 'hack' ] );
+  assert_equal_only_lemmas( lem.only_lemmas('coded'), [ 'cod', 'code' ] );
+  assert_equal_only_lemmas( lem.only_lemmas('fitting'), [ 'fit' ] );
+  assert_equal_only_lemmas( lem.only_lemmas('coding'), [ 'cod', 'code' ] );
+  assert_equal_only_lemmas( lem.only_lemmas('pirouetting'), [ 'pirouette' ] );
+  assert_equal_only_lemmas( lem.only_lemmas('hacking'), [ 'hack' ] );
+  assert_equal_only_lemmas( lem.only_lemmas('earliest'), [ 'early' ] );
+  assert_equal_only_lemmas( lem.only_lemmas('biggest'), [ 'big' ] );
+  assert_equal_only_lemmas( lem.only_lemmas('largest'), [ 'large' ] );
+  assert_equal_only_lemmas( lem.only_lemmas('smallest'), [ 'small' ] );
+  assert_equal_only_lemmas( lem.only_lemmas('earlier'), [ 'early' ] );
+  assert_equal_only_lemmas( lem.only_lemmas('bigger'), [ 'big' ] );
+  assert_equal_only_lemmas( lem.only_lemmas('larger'), [ 'large' ] );
+  assert_equal_only_lemmas( lem.only_lemmas('smaller'), [ 'small' ] );
+  assert_equal_only_lemmas( lem.only_lemmas('recognizable'), [ 'recognizable' ] );
+  assert_equal_only_lemmas( lem.only_lemmas('networkable'), [ 'networkable' ] );
+  assert_equal_only_lemmas( lem.only_lemmas('resettability'), [ 'resettability' ] );
+  assert_equal_only_lemmas( lem.only_lemmas('repairability'), [ 'repairability' ] );
+  assert_equal_only_lemmas( lem.only_lemmas('reorganizability'), [ 'reorganizability' ] );
+  assert_equal_only_lemmas( lem.only_lemmas('starts'), [ 'start' ] );
+  assert_equal_only_lemmas( lem.only_lemmas('teaches'), [ 'teach' ] );
+  assert_equal_only_lemmas( lem.only_lemmas('talked'), [ 'talk' ] );
+  assert_equal_only_lemmas( lem.only_lemmas('saved'), [ 'save' ] );
+  assert_equal_only_lemmas( lem.only_lemmas('sitting'), [ 'sit' ] );
+  assert_equal_only_lemmas( lem.only_lemmas('having'), [ 'have' ] );
+  assert_equal_only_lemmas( lem.only_lemmas('talking'), [ 'talk' ] );
+  assert_equal_only_lemmas( lem.only_lemmas('heavier'), [ 'heavy' ] );
+  assert_equal_only_lemmas( lem.only_lemmas('bigger'), [ 'big' ] );
+  assert_equal_only_lemmas( lem.only_lemmas('huger'), [ 'huge' ] );
+  assert_equal_only_lemmas( lem.only_lemmas('lower'), [ 'low' ] );
+  assert_equal_only_lemmas( lem.only_lemmas('writable'), [ 'writable' ] );
+  assert_equal_only_lemmas( lem.only_lemmas('readable'), [ 'readable' ] );
+  assert_equal_only_lemmas( lem.only_lemmas('readability'), [ 'readability' ] );
+  assert_equal_only_lemmas( lem.only_lemmas('writability'), [ 'writability' ] );
+  assert_equal_only_lemmas( lem.only_lemmas('scoreless'), [ 'scoreless' ] );
+  assert_equal_only_lemmas( lem.only_lemmas('dogs'), [ 'dog' ] );
+  assert_equal_only_lemmas( lem.only_lemmas('dishes'), [ 'dish' ] );
+  assert_equal_only_lemmas( lem.only_lemmas('heaviest'), [ 'heavy' ] );
+  assert_equal_only_lemmas( lem.only_lemmas('biggest'), [ 'big' ] );
+  assert_equal_only_lemmas( lem.only_lemmas('hugest'), [ 'huge' ] );
+  assert_equal_only_lemmas( lem.only_lemmas('lowest'), [ 'low' ] );
+  assert_equal_only_lemmas( lem.only_lemmas('heavier'), [ 'heavy' ] );
+  assert_equal_only_lemmas( lem.only_lemmas('bigger'), [ 'big' ] );
+  assert_equal_only_lemmas( lem.only_lemmas('lower'), [ 'low' ] );
+  assert_equal_only_lemmas( lem.only_lemmas('higher'), [ 'high' ] );
+  assert_equal_only_lemmas( lem.only_lemmas('leaves'), [ 'leave', 'leaf' ] );
 
 });

@@ -152,22 +152,17 @@ Lemmatizer.prototype = {
   },
 
   setup_dic_data: function(pos) {
+    var self = this;
     var key_idx = pos + this.idx;
-    var idx_data = this.fetch_idx_data(key_idx);
-    var idx_len  = idx_data.length;
-    for (var i = 0; i < idx_len; i++) {
-      var w = idx_data[i];
-      this.wordlists[pos][w] = w;
-    }
-
+    _.each( this.fetch_idx_data(key_idx), function(w) {
+      self.wordlists[pos][w] = w;
+    });
     var key_exc = pos + this.exc; 
-    var exc_data = this.fetch_exc_data(key_exc);
-    var exc_len  = exc_data.length;
-    for (var i = 0; i < exc_len; i++) {
-      var w = exc_data[i][0];
-      var s = exc_data[i][1];
-      this.exceptions[pos][w] = s;
-    }
+    _.each( this.fetch_exc_data(key_exc), function(item) {
+      var w = item[0];
+      var s = item[1];
+      self.exceptions[pos][w] = s;
+    });
   },
 
   open_file: function(key, file) {
@@ -256,16 +251,15 @@ Lemmatizer.prototype = {
 
   // return array lemmas like [ [lemma1, "verb"], [lemma2, "noun"]... ]
   regular_lemmas: function(bases) {
+    var self = this;
     // bases -> [ [lemma1, lemma2, lemma3...], pos ]
-    var pos = bases[1];
     var lemmas = bases[0];
-    var lemmas_len = bases[0].length;
-    for (var i = 0; i < lemmas_len; i++) {
-      var lemma = lemmas[i];
-      if ( this.wordlists[pos][lemma] && this.wordlists[pos][lemma] == lemma && lemma != this.form ) {
-        this.lems.push( [lemma, pos] );
+    var pos = bases[1];
+    _.each( lemmas, function(lemma) {
+      if ( self.wordlists[pos][lemma] && self.wordlists[pos][lemma] == lemma && lemma != self.form ) {
+        self.lems.push( [lemma, pos] );
       }
-    }
+    });
   },
 
   verb_bases: function() {
@@ -363,14 +357,7 @@ Lemmatizer.prototype = {
   },
 
   is_vowel: function(letter) {
-    var vowels = ["a", "e", "i", "o", "u"];
-    var len = vowels.length;
-    for (var i = 0; i < len; i++) {
-      if (letter == vowels[i]) {
-        return true;
-      }
-    }
-    return false;
+    return _.include(["a", "e", "i", "o", "u"], letter);
   },
 
   is_end_with_es: function() {
@@ -382,8 +369,8 @@ Lemmatizer.prototype = {
     }
   },
 
-  // var arr = [ ["leave", "verb"], ["leaf", "noun"], ["leave", "verb"], ["leave", "noun"] ];
-  // var u_arr = this.uniq_lemmas(arr);
+  // [ ["leave", "verb"], ["leaf", "noun"], ["leave", "verb"], ["leave", "noun"] ];
+  // -> [ ["leave", "verb"], ["leaf", "noun"], ["leave", "noun"] ];
   uniq_lemmas: function(lemmas) {
     var u_lemmas = [];
     var len = lemmas.length;
