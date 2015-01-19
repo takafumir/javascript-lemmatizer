@@ -90,24 +90,29 @@ Lemmatizer.prototype = {
     this.lems = [];
     this.form = form;
 
+    var parts = ['verb', 'noun', 'adj', 'adv'];
+    if ( pos && !_.include( parts, pos ) ) {
+      console.log("warning: pos must be 'verb' or 'noun' or 'adj' or 'adv'.");
+      return;
+    }
+
     if (!pos) {
-      var parts = ['verb', 'noun', 'adj', 'adv'];
       _.each( parts, function(pos) { self.irregular_bases(pos); } );
       _.each( parts, function(pos) { self.regular_bases(pos); } );
 
-      // when lemma not found and the form is included in wordlists
-      if (this.lems.length == 0) {
+      // when lemma not found and the form is included in wordlists.
+      if ( this.is_lemma_empty() ) {
         _.chain(parts)
          .select( function(pos) { return self.wordlists[pos][form]; } )
          .each( function(pos) { self.lems.push([ form, pos ]); } );
       }
-      // when lemma not found and the form is not included in wordlists
-      if (this.lems.length == 0) {
+      // when lemma not found and the form is not included in wordlists.
+      if ( this.is_lemma_empty() ) {
         this.lems.push([ form, '' ]);
       }
     } else {
       this.base_forms(pos);
-      if (this.lems.length == 0) {
+      if ( this.is_lemma_empty() ) {
         this.lems.push([ form, pos ]);
       }
     }
@@ -116,7 +121,12 @@ Lemmatizer.prototype = {
     return _.sortBy( this.uniq_lemmas(this.lems), function(val) { return val[1]; } ).reverse();
   },
 
-  // to confirm
+  only_lemmas: function(form, pos) {
+    var result = _.map( this.lemmas(form, pos), function(val) { return val[0]; } );
+    return _.uniq(result);
+  },
+
+  // to confirm in console
   console_log: function(form, pos) {
     _.each(this.lemmas(form, pos), function(val) {
       console.log("The base form of '" + form + "' is '" + val[0] + "' as " + val[1]);
@@ -128,6 +138,10 @@ Lemmatizer.prototype = {
   // The following properties(methods) are only used by
   // Lemmatizer inside, so don't call them from outside.
   // **************************************************
+  is_lemma_empty: function() {
+    return this.lems.length == 0;
+  },
+
   // set up dictionary data
   load_wordnet_files: function(pos, list, exc) {
     var key_idx = pos + this.idx;

@@ -11,14 +11,20 @@
 
   <script type="text/javascript">
     var lem = new Lemmatizer();
-    var form_word = 'higher';
-    var part_of_speech = 'noun';
+    var form = 'leaves';
+    var pos = 'noun';
 
     console.log('--- with pos ----');
-    lem.console_log(form_word, part_of_speech);
+    lem.console_log(form, pos);
 
     console.log('--- without pos ----');
-    lem.console_log(form_word);
+    lem.console_log(form);
+
+    console.log("***** only lemmas *****");
+    console.log('--- with pos ----');
+    console.log( lem.only_lemmas(form, pos) );
+    console.log('--- without pos ----');
+    console.log( lem.only_lemmas(form) );
 
     // Uncomment the following code to display dictionary data.
     // Be careful the dictionary data is large, so it'll take a long time to display the data.
