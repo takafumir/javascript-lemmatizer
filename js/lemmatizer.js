@@ -1,4 +1,4 @@
-// define String#endsWith
+// extend String and define String#endsWith
 String.prototype.endsWith = function(suffix) {
   return this.indexOf(suffix, this.length - suffix.length) !== -1;
 };
@@ -24,7 +24,7 @@ var Lemmatizer = function() {
     ]
   };
 
-  // not use these parts' pairs
+  // not use these pos's pairs
   this.morphological_substitutions = {
     noun: [
       ['s',    ''   ],
@@ -90,28 +90,18 @@ Lemmatizer.prototype = {
     this.lems = [];
     this.form = form;
 
-    if (typeof pos === 'undefined') {
-      pos = null;
-    }
-
     if (!pos) {
       var parts = ['verb', 'noun', 'adj', 'adv'];
-      var len = parts.length;
-      // colelct irregular bases
-      for (var i = 0; i < len; i++) {
-        this.irregular_bases(parts[i]);
-      }
-      // collect regular bases
-      for (var i = 0; i < len; i++) {
-        this.regular_bases(parts[i]);
-      }
-      // when the form is included in wordlists
+      _.each( parts, function(pos) { self.irregular_bases(pos); } );
+      _.each( parts, function(pos) { self.regular_bases(pos); } );
+
+      // when lemma not found and the form is included in wordlists
       if (this.lems.length == 0) {
         _.chain(parts)
-         .select( function(pos) { return self.wordlists[pos][form] } )
-         .each( function(pos) { self.lems.push([ form, pos ]) } );
+         .select( function(pos) { return self.wordlists[pos][form]; } )
+         .each( function(pos) { self.lems.push([ form, pos ]); } );
       }
-      // when the form is not included in wordlists
+      // when lemma not found and the form is not included in wordlists
       if (this.lems.length == 0) {
         this.lems.push([ form, '' ]);
       }
@@ -122,13 +112,13 @@ Lemmatizer.prototype = {
       }
     }
 
+    // sort to verb -> noun -> adv -> adj
     return _.sortBy( this.uniq_lemmas(this.lems), function(val) { return val[1]; } ).reverse();
   },
 
   // to confirm
   console_log: function(form, pos) {
-    var lemmas = this.lemmas(form, pos);
-    _.each(lemmas , function(val) {
+    _.each(this.lemmas(form, pos), function(val) {
       console.log("The base form of '" + form + "' is '" + val[0] + "' as " + val[1]);
     });
   },
@@ -142,7 +132,6 @@ Lemmatizer.prototype = {
   load_wordnet_files: function(pos, list, exc) {
     var key_idx = pos + this.idx;
     this.open_file(key_idx, list);
-
     var key_exc = pos + this.exc; 
     this.open_file(key_exc, exc);
   },
