@@ -84,6 +84,7 @@ QUnit.test( 'JavaScript Lemmatizer QUnit Tests', function( assert ) {
   assert.deepEqual( lem.lemmas('lower', 'adj'), [ ['low', 'adj'] ] );
   assert.deepEqual( lem.lemmas('higher', 'adj'), [ ['high', 'adj'] ] );
   assert.deepEqual( lem.lemmas('leaves', 'noun'), [ ['leave', 'noun'], ['leaf', 'noun'] ] );
+  assert.deepEqual( lem.lemmas('player', 'noun'), [ ['player', 'noun'] ] );
 
   // various test without pos
   assert.deepEqual( lem.lemmas('goes'), [ ['go', 'verb'], ['go', 'noun'] ] );
@@ -144,9 +145,11 @@ QUnit.test( 'JavaScript Lemmatizer QUnit Tests', function( assert ) {
   assert.deepEqual( lem.lemmas('lower'), [ ['low', 'adv'], ['low', 'adj'] ] );
   assert.deepEqual( lem.lemmas('higher'), [ ['high', 'adv'], ['high', 'adj'] ] );
   assert.deepEqual( lem.lemmas('leaves'), [ ['leave', 'verb'], ['leave', 'noun'], ['leaf', 'noun'] ] );
+  assert.deepEqual( lem.lemmas('player'), [ ['player', 'noun'] ] );
 
-
+  // **************************************************
   // only_lemmas tests
+  // **************************************************
   assert.deepEqual( lem.only_lemmas('analyses', 'noun'), [ 'analysis' ] );
 
   // Lemmatizer leaves alone words that its dictionary does not contain.
@@ -230,6 +233,7 @@ QUnit.test( 'JavaScript Lemmatizer QUnit Tests', function( assert ) {
   assert.deepEqual( lem.only_lemmas('lower', 'adj'), [ 'low' ] );
   assert.deepEqual( lem.only_lemmas('higher', 'adj'), [ 'high' ] );
   assert.deepEqual( lem.only_lemmas('leaves', 'noun'), [ 'leave', 'leaf' ] );
+  assert.deepEqual( lem.only_lemmas('player', 'noun'), [ 'player' ] );
 
   // various test without pos
   assert.deepEqual( lem.only_lemmas('goes'), [ 'go' ] );
@@ -290,4 +294,5 @@ QUnit.test( 'JavaScript Lemmatizer QUnit Tests', function( assert ) {
   assert.deepEqual( lem.only_lemmas('lower'), [ 'low' ] );
   assert.deepEqual( lem.only_lemmas('higher'), [ 'high' ] );
   assert.deepEqual( lem.only_lemmas('leaves'), [ 'leave', 'leaf' ] );
+  assert.deepEqual( lem.only_lemmas('player'), [ 'player' ] );
 });
