@@ -219,7 +219,7 @@ Lemmatizer.prototype = {
 
   // build array lemmas(this.lems) like [ [lemma1, "verb"], [lemma2, "noun"]... ]
   irregular_bases: function(pos) {
-    if (this.exceptions[pos][this.form]) {
+    if (this.exceptions[pos][this.form] && this.exceptions[pos][this.form] != this.form) {
       this.lems.push( [this.exceptions[pos][this.form], pos] );
     }
   },
