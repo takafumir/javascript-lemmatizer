@@ -16,7 +16,7 @@
       if (!form) { return; }
       var html = '';
       _.each(lemmatizer.lemmas(form, pos), function(val) {
-        html = html + "The base form of '" + form + "' is '" + val[0] + "' as " + val[1] + "<br />";
+        html = html + "The base form of '" + form + "' is '" + val[0] + "' as " + val[1] + ".<br />";
       });
       $("#lem-result").html(html);
     }
@@ -54,7 +54,7 @@
   </form>
   <button id="search-lemma">Search Lemma</button>
   <br /><br />
-  *** Show Lemma here ***
+  *** Show base form here ***
   <div id="lem-result"></div>
 	
 
@@ -63,13 +63,15 @@
   // Be careful the dictionary data is large, so it might take a long time.
   -->
 
+  <!--
   <br /><br />
-  <button id="lem-exc-button">confirm all lemma exceptions</button>
-  <button id="lem-list-button">confirm all lemma lists</button>
+  <button id="lem-exc-button">confirm all base form exceptions</button>
+  <button id="lem-list-button">confirm all base form lists</button>
   <br /><br />
   *** Show all lemma here ***
   <div id="lem-confirm"></div>
   <br /><br />
+  -->
 
 </body>
 </html>
