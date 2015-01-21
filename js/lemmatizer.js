@@ -127,12 +127,6 @@ Lemmatizer.prototype = {
     return _.uniq(result);
   },
 
-  // to confirm in console
-  console_log: function(form, pos) {
-    _.each(this.lemmas(form, pos), function(val) {
-      console.log("The base form of '" + form + "' is '" + val[0] + "' as " + val[1]);
-    });
-  },
 
   // **************************************************
   // private
