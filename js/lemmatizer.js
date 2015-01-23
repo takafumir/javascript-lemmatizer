@@ -91,7 +91,11 @@ Lemmatizer.prototype = {
   exc: '_exc',
   lems: [], // -> [ [lemma1, "verb"], [lemma2, "noun"]... ]
 
+  // **************************************************
   // public
+  // **************************************************
+  // reuturn Array of ["lemma", "pos"] pairs
+  // like [ ["lemma1", "verb"], ["lemma2", "noun"]... ]
   lemmas: function(form, pos) {
     var self = this;
     this.lems = [];
@@ -288,15 +292,6 @@ Lemmatizer.prototype = {
 
   is_vowel: function(letter) {
     return _.include(["a", "e", "i", "o", "u"], letter);
-  },
-
-  is_end_with_es: function() {
-    var form = this.form;
-    if ( form.endsWith('ses') || form.endsWith('xes') || form.endsWith('zes') || form.endsWith('shes') || form.endsWith('ches') ) {
-      return true;
-    } else {
-      return false;
-    }
   },
 
   // [ ["leave", "verb"], ["leaf", "noun"], ["leave", "verb"], ["leave", "noun"] ];
