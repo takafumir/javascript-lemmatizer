@@ -183,6 +183,7 @@ Lemmatizer.prototype = {
     localStorage[key] = data;
   },
 
+  // somehow JSON.parse(localStorage[key]) does not work, so build array data from string.
   fetch_idx_data: function(key) {
     arr = localStorage[key].split(',');
     return arr;
