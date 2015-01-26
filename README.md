@@ -22,14 +22,26 @@ The operation check of JavaScript Lemmatizer is conducted in the following web b
 - Opera 25.0
 
 ## Install
-######1. Download and unzip JavaScript Lemmatizer.
+######1. Download and unzip JavaScript Lemmatizer, and then put it in your project.
+
+Directories of dict, js and vendor in JavaScript Lemmatizer are must, so you can put it in your project like this.
+
+```
+your-project
+├ index.html
+├ libraries
+    ├ javascript-lemmatizer
+        ├ dict
+        ├ js
+        ├ vendor
+```
 
 ######2. Load jQuery, Underscore.js and JavaScript Lemmatizer in your HTML like the following code.
 
 ```html
-<script src="javascript-lemmatizer/vendor/js/jquery.js"></script>
-<script src="javascript-lemmatizer/vendor/js/underscore.js"></script>
-<script src="javascript-lemmatizer/js/lemmatizer.js"></script>
+<script src="libraries/javascript-lemmatizer/vendor/js/jquery.js"></script>
+<script src="libraries/javascript-lemmatizer/vendor/js/underscore.js"></script>
+<script src="libraries/javascript-lemmatizer/js/lemmatizer.js"></script>
 ```
 
 Or you can load jQuery and Underscore.js the way you like.
@@ -40,7 +52,7 @@ See also. [lemmatizer_sample.html](https://github.com/takafumir/javascript-lemma
 
 ## Usage
 
-You can use `Lemmatizer#lemmas` or `Lemmatizer#only_lemmas` methods like the follwoing sample code.
+You can use `Lemmatizer#lemmas` or `Lemmatizer#only_lemmas` methods like the follwoing sample in your JavaScript code.
 
 ```javascript
 // initialize Lemmatizer.
