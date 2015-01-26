@@ -1,7 +1,7 @@
 JavaScript Lemmatizer
 ====
 
-JavaScript Lemmatizer is a lemmatization library for JavaScript to retrieve a base form from an English inflected form word. 
+JavaScript Lemmatizer is a lemmatization library for JavaScript to retrieve a base form from an inflected form word in English. 
 
 Inspired by [Ruby Lemmatizer](https://github.com/yohasebe/lemmatizer) but the returning values and the algorithm are different from it.
 
@@ -15,9 +15,7 @@ JavaScript Lemmatizer depends on the following libraries.
 ## Install
 1. Download and unzip JavaScript Lemmatizer.
 
-2. Load jQuery, Underscore.js and JavaScript Lemmatizer in your HTML like the following code, or you can load jQuery and Underscore.js the way you like.
-
-```html
+2. Load jQuery, Underscore.js and JavaScript Lemmatizer in your HTML like the following code, or you can load jQuery and Underscore.js the way you like. ```html
 <script src="javascript-lemmatizer/vendor/js/jquery.js"></script>
 <script src="javascript-lemmatizer/vendor/js/underscore.js"></script>
 <script src="javascript-lemmatizer/js/lemmatizer.js"></script>
@@ -27,7 +25,7 @@ JavaScript Lemmatizer depends on the following libraries.
 
 ## Usage
 
-You can use Lemmatizer#lemmas or Lemmatizer#only_lemmas methods like the follwoing sample code.
+You can use `Lemmatizer#lemmas` or `Lemmatizer#only_lemmas` methods like the follwoing sample code.
 
 ```javascript
 // initialize Lemmatizer.
@@ -61,9 +59,11 @@ lemmatizer.only_lemmas('leaves');         // => [ 'leave', 'leaf' ]
 See also. [lemmatizer_sample.html](https://github.com/takafumir/javascript-lemmatizer/blob/master/html/lemmatizer_sample.html)
 
 ## Limitations
+```javascript
 // Lemmatizer leaves alone words that its dictionary does not contain.
 // This keeps proper names such as "James" intact.
 lemmatizer.lemmas('MacBooks', 'noun');  // => [ ['MacBooks', 'noun'] ]
+```
 
 ## Contribution
 
