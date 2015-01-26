@@ -3,7 +3,7 @@ JavaScript Lemmatizer
 
 JavaScript Lemmatizer is a lemmatization library for JavaScript to retrieve a base form from an inflected form word in English. 
 
-Inspired by [Ruby Lemmatizer](https://github.com/yohasebe/lemmatizer) but the returning values and the algorithm are different from it.
+Inspired by [Ruby Lemmatizer](https://github.com/yohasebe/lemmatizer) but the returned values and the algorithm are different from it.
 
 ## Requirements
 
@@ -34,7 +34,7 @@ The operation check of JavaScript Lemmatizer is conducted in the following web b
 
 Or you can load jQuery and Underscore.js the way you like.
 
-######3. Use JavaScript Lemmatizer in your HTML according to the Usage. 
+######3. Use JavaScript Lemmatizer in your JavaScript code according to the Usage.
 
 See also. [lemmatizer_sample.html](https://github.com/takafumir/javascript-lemmatizer/blob/master/html/lemmatizer_sample.html)
 
@@ -64,7 +64,7 @@ lemmatizer.lemmas('sitting');  // => [ ['sit', 'verb'] ]
 lemmatizer.lemmas('oxen');     // => [ ['ox', 'noun'] ]
 lemmatizer.lemmas('leaves');   // => [ ['leave', 'verb'], ['leave', 'noun'], ['leaf', 'noun'] ]
 
-// retrieve only lemmas not including part of speeches in the returning value.
+// retrieve only lemmas not including part of speeches in the returned value.
 lemmatizer.only_lemmas('desks', 'noun');  // => [ 'desk' ]
 lemmatizer.only_lemmas('coded', 'verb');  // => [ 'cod', 'code' ]
 lemmatizer.only_lemmas('priorities');     // => [ 'priority' ]
