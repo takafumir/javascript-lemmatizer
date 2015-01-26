@@ -15,7 +15,8 @@ JavaScript Lemmatizer depends on the following libraries.
 ## Install
 1. Download and unzip JavaScript Lemmatizer.
 
-2. Load jQuery, Underscore.js and JavaScript Lemmatizer in your HTML like the following code, or you can load jQuery and Underscore.js the way you like. ```html
+2. Load jQuery, Underscore.js and JavaScript Lemmatizer in your HTML like the following code, or you can load jQuery and Underscore.js the way you like.
+```html
 <script src="javascript-lemmatizer/vendor/js/jquery.js"></script>
 <script src="javascript-lemmatizer/vendor/js/underscore.js"></script>
 <script src="javascript-lemmatizer/js/lemmatizer.js"></script>
