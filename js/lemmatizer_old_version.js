@@ -24,6 +24,7 @@ var Lemmatizer = function() {
     ]
   };
 
+  // not use these pos's pairs
   this.morphological_substitutions = {
     noun: [
       ['s',    ''   ],
@@ -50,17 +51,9 @@ var Lemmatizer = function() {
       ['er',  '' ],
       ['est', '' ],
       ['er',  'e'],
-      ['est', 'e'],
-      ['ier', 'y'],
-      ['iest', 'y']
+      ['est', 'e']
     ],
     adv:  [
-      ['er',  '' ],
-      ['est', '' ],
-      ['er',  'e'],
-      ['est', 'e'],
-      ['ier', 'y'],
-      ['iest', 'y']
     ]
   };
 
@@ -91,11 +84,7 @@ Lemmatizer.prototype = {
   exc: '_exc',
   lems: [], // -> [ [lemma1, "verb"], [lemma2, "noun"]... ]
 
-  // **************************************************
   // public
-  // **************************************************
-  // reuturn Array of ["lemma", "pos"] pairs
-  // like [ ["lemma1", "verb"], ["lemma2", "noun"]... ]
   lemmas: function(form, pos) {
     var self = this;
     this.lems = [];
@@ -234,14 +223,29 @@ Lemmatizer.prototype = {
   regular_bases: function(pos) {
     var bases = null;
     // bases -> [ [lemma1, lemma2, lemma3...], pos ]
-    bases = this.possible_bases(pos);
+    switch (pos){
+      case 'verb':
+        bases = this.verb_bases();
+        break;
+      case 'noun':
+        bases = this.noun_bases();
+        break;
+      case 'adj':
+        bases = this.adj_adv_bases('adj');
+        break;
+      case 'adv':
+        bases = this.adj_adv_bases('adv');
+        break;
+      default:
+        break;
+    }
     if (bases) {
-      this.check_lemmas(bases);
+      this.regular_lemmas(bases);
     }
   },
 
-  // check if possible bases are include in lemma wordlists and push
-  check_lemmas: function(bases) {
+  // return array lemmas like [ [lemma1, "verb"], [lemma2, "noun"]... ]
+  regular_lemmas: function(bases) {
     var self = this;
     // bases -> [ [lemma1, lemma2, lemma3...], pos ]
     var lemmas = bases[0];
@@ -253,32 +257,89 @@ Lemmatizer.prototype = {
     });
   },
 
-  possible_bases: function(pos) {
-    var self = this;
+  verb_bases: function() {
     var form = this.form;
     var lemmas = [];
 
-    _.each(this.morphological_substitutions[pos], function(entry) {
-      var morpho = entry[0];
-      var origin = entry[1];
-      if ( form.endsWith(morpho) ) {
-        if ( pos == 'verb' && morpho == 'ing' && self.double_consonant(morpho) ) {
-          lemmas.push( form.slice( 0, -(morpho.length + 1) + origin ) );
-        }
-        if ( (pos == 'adj' || pos == 'adv') && morpho == 'est' && self.double_consonant(morpho) ) {
-          lemmas.push( form.slice( 0, -(morpho.length + 1) + origin ) );
-        }
-        if ( (pos == 'adj' || pos == 'adv') && morpho == 'er' && self.double_consonant(morpho) ) {
-          lemmas.push( form.slice( 0, -(morpho.length + 1) + origin ) );
-        }
-        lemmas.push( form.slice( 0, -(morpho.length) ) + origin );
+    if (form.endsWith('s')) {
+      // starts -> start
+      lemmas.push(form.slice(0, -1));
+      if ( this.is_end_with_es() ) {
+        // teaches -> teach
+        lemmas.push(form.slice(0, -2));
+      } else if (form.endsWith('es')) {
+        // goes -> go
+        lemmas.push(form.slice(0, -2));
       }
-    });
-
+    } else if (form.endsWith('ed')) {
+      // saved -> save
+      lemmas.push(form.slice(0, -1));
+      // talked -> talk
+      lemmas.push(form.slice(0, -2));
+    } else if (form.endsWith('ing')) {
+      if (this.double_consonant('ing')) {
+        // sitting -> sit
+        lemmas.push(form.slice(0, -4));
+      }
+      // having -> have
+      lemmas.push(form.slice(0, -3) + 'e');
+      // talking -> talk
+      lemmas.push(form.slice(0, -3));
+    }
     if (lemmas.length == 0) {
       lemmas.push(form);
     }
+    return [ lemmas, 'verb' ];
+  },
 
+  noun_bases: function() {
+    var form = this.form;
+    var lemmas = [];
+    if (form.endsWith('s')) {
+      // dogs -> dog
+      lemmas.push(form.slice(0, -1));
+      if ( this.is_end_with_es() ) {
+        // dishes -> dish
+        lemmas.push(form.slice(0, -2));
+      }
+    }
+    if (lemmas.length == 0) {
+      lemmas.push(form);
+    }
+    return [ lemmas, 'noun' ];
+  },
+
+  adj_adv_bases: function(pos) {
+    var form = this.form;
+    var lemmas = [];
+    if (form.endsWith('est')) {
+      if (form.endsWith('iest')){
+        // heaviest -> heavy
+        lemmas.push(form.slice(0, -4) + 'y');
+      } else if (this.double_consonant('est')) {
+        // biggest -> big
+        lemmas.push(form.slice(0, -4));
+      }
+      // hugest -> huge
+      lemmas.push(form.slice(0, -2));
+      // lowest -> low
+      lemmas.push(form.slice(0, -3));
+    } else if (form.endsWith('er')) {
+      if (form.endsWith('ier')) {
+        // heavier -> heavy
+        lemmas.push(form.slice(0, -3) + 'y');
+      } else if (this.double_consonant('er')) {
+        // bigger -> big
+        lemmas.push(form.slice(0, -3));
+      }
+      // huger -> huge
+      lemmas.push(form.slice(0, -1));
+      // lower -> low
+      lemmas.push(form.slice(0, -2));
+    }
+    if (lemmas.length == 0) {
+      lemmas.push(form);
+    }
     return [ lemmas, pos ];
   },
 
@@ -292,6 +353,15 @@ Lemmatizer.prototype = {
 
   is_vowel: function(letter) {
     return _.include(["a", "e", "i", "o", "u"], letter);
+  },
+
+  is_end_with_es: function() {
+    var form = this.form;
+    if ( form.endsWith('ses') || form.endsWith('xes') || form.endsWith('zes') || form.endsWith('shes') || form.endsWith('ches') ) {
+      return true;
+    } else {
+      return false;
+    }
   },
 
   // [ ["leave", "verb"], ["leaf", "noun"], ["leave", "verb"], ["leave", "noun"] ];

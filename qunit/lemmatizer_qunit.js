@@ -85,6 +85,7 @@ QUnit.test( 'JavaScript Lemmatizer QUnit Tests', function( assert ) {
   assert.deepEqual( lem.lemmas('higher', 'adj'), [ ['high', 'adj'] ] );
   assert.deepEqual( lem.lemmas('leaves', 'noun'), [ ['leave', 'noun'], ['leaf', 'noun'] ] );
   assert.deepEqual( lem.lemmas('player', 'noun'), [ ['player', 'noun'] ] );
+  assert.deepEqual( lem.lemmas('priorities', 'noun'), [ ['priority', 'noun'] ] );
 
   // various test without pos
   assert.deepEqual( lem.lemmas('goes'), [ ['go', 'verb'], ['go', 'noun'] ] );
@@ -146,6 +147,7 @@ QUnit.test( 'JavaScript Lemmatizer QUnit Tests', function( assert ) {
   assert.deepEqual( lem.lemmas('higher'), [ ['high', 'adv'], ['high', 'adj'] ] );
   assert.deepEqual( lem.lemmas('leaves'), [ ['leave', 'verb'], ['leave', 'noun'], ['leaf', 'noun'] ] );
   assert.deepEqual( lem.lemmas('player'), [ ['player', 'noun'] ] );
+  assert.deepEqual( lem.lemmas('priorities'), [ ['priority', 'noun'] ] );
 
   // **************************************************
   // only_lemmas tests
@@ -234,6 +236,7 @@ QUnit.test( 'JavaScript Lemmatizer QUnit Tests', function( assert ) {
   assert.deepEqual( lem.only_lemmas('higher', 'adj'), [ 'high' ] );
   assert.deepEqual( lem.only_lemmas('leaves', 'noun'), [ 'leave', 'leaf' ] );
   assert.deepEqual( lem.only_lemmas('player', 'noun'), [ 'player' ] );
+  assert.deepEqual( lem.only_lemmas('priorities', 'noun'), [ 'priority' ] );
 
   // various test without pos
   assert.deepEqual( lem.only_lemmas('goes'), [ 'go' ] );
@@ -295,4 +298,5 @@ QUnit.test( 'JavaScript Lemmatizer QUnit Tests', function( assert ) {
   assert.deepEqual( lem.only_lemmas('higher'), [ 'high' ] );
   assert.deepEqual( lem.only_lemmas('leaves'), [ 'leave', 'leaf' ] );
   assert.deepEqual( lem.only_lemmas('player'), [ 'player' ] );
+  assert.deepEqual( lem.only_lemmas('priorities'), [ 'priority' ] );
 });
