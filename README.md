@@ -12,6 +12,15 @@ JavaScript Lemmatizer depends on the following libraries.
 [jQuery](http://jquery.com/)  
 [Underscore.js](http://underscorejs.org/)
 
+## Check
+
+The operation check of JavaScript Lemmatizer is conducted in the following web browsers with Mac OS X.
+
+Firefox 35.0
+Google Chrome 40.0
+Safari 6.1.6
+Opera 25.0
+
 ## Install
 ######1. Download and unzip JavaScript Lemmatizer.
 
