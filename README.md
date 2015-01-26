@@ -1,7 +1,7 @@
 JavaScript Lemmatizer
 ====
 
-JavaScript Lemmatizer is a lemmatization library for JavaScript to retrieve a base form from an English inflected word. 
+JavaScript Lemmatizer is a lemmatization library for JavaScript to retrieve a base form from an English inflected form word. 
 
 Inspired by [Ruby Lemmatizer](https://github.com/yohasebe/lemmatizer) but the returning values and the algorithm are different from it.
 
@@ -9,13 +9,13 @@ Inspired by [Ruby Lemmatizer](https://github.com/yohasebe/lemmatizer) but the re
 
 JavaScript Lemmatizer depends on the following libraries.
 
-[jQuery](http://jquery.com/)
+[jQuery](http://jquery.com/)  
 [Underscore.js](http://underscorejs.org/)
 
 ## Install
 1. Download and unzip JavaScript Lemmatizer.
 
-2. Load jQuery, Underscore.js and JavaScript Lemmatizer in your HTML like the following code.
+2. Load jQuery, Underscore.js and JavaScript Lemmatizer in your HTML like the following code, or you can load jQuery and Underscore.js the way you like.
 
 ```
 <script src="javascript-lemmatizer/vendor/js/jquery.js"></script>
@@ -23,11 +23,7 @@ JavaScript Lemmatizer depends on the following libraries.
 <script src="javascript-lemmatizer/js/lemmatizer.js"></script>
 ```
 
-You can load jQuery and Underscore.js the way you like.
-
-3. Use JavaScript Lemmatizer in your HTML according to the Usage.
-
-See also. [lemmatizer_sample.html](https://github.com/takafumir/javascript-lemmatizer/blob/master/html/lemmatizer_sample.html)
+3. Use JavaScript Lemmatizer in your HTML according to the Usage. See also. [lemmatizer_sample.html](https://github.com/takafumir/javascript-lemmatizer/blob/master/html/lemmatizer_sample.html)
 
 ## Usage
 
@@ -38,7 +34,7 @@ You can use Lemmatizer#lemmas or Lemmatizer#only_lemmas methods like the follwoi
 var lemmatizer = new Lemmatizer();
 
 // retrieve a lemma with a part of speech.
-lemmatizer.lemmas('desks',  'noun');   // => [ ['desk', 'noun'] ]
+lemmatizer.lemmas('desks',  'noun');   [//]: // => [ ['desk', 'noun'] ]
 lemmatizer.lemmas('talked', 'verb');   // => [ ['talk', 'verb'] ]
 lemmatizer.lemmas('better', 'adj');    // => [ ['good', 'adj'] ]
 
@@ -79,7 +75,7 @@ lemmatizer.lemmas('MacBooks', 'noun');  // => [ ['MacBooks', 'noun'] ]
 
 ## Licence
 
-[MIT License](LICENCE url)
+[MIT License](https://github.com/takafumir/javascript-lemmatizer/blob/master/LICENCE.txt)
 
 ## Author
 
