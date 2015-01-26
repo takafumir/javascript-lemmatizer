@@ -5,16 +5,23 @@ JavaScript Lemmatizer is a lemmatization library for JavaScript to retrieve a ba
 
 Inspired by [Ruby Lemmatizer](https://github.com/yohasebe/lemmatizer) but the returned values and the algorithm are different from it.
 
+## Demo
+
+Bundle a sample html in this library. The sample html code and the demo page are followings.
+
+- [lemmatizer_sample.html](https://github.com/takafumir/javascript-lemmatizer/blob/master/html/lemmatizer_sample.html)
+- [Demo page](http://takafumir.github.io/javascript-lemmatizer/html/lemmatizer_sample.html)
+
 ## Requirements
 
-JavaScript Lemmatizer depends on the following libraries.
+Depends on the following libraries.
 
 - [jQuery](http://jquery.com/)
 - [Underscore.js](http://underscorejs.org/)
 
 ## Check
 
-The operation check of JavaScript Lemmatizer is conducted in the following web browsers with Mac OS X.
+The operation check is conducted in the following web browsers with Mac OS X.
 
 - Firefox 35.0
 - Google Chrome 40.0
@@ -24,7 +31,7 @@ The operation check of JavaScript Lemmatizer is conducted in the following web b
 ## Install
 ######1. Download and unzip JavaScript Lemmatizer, and then put it in your project.
 
-Directories of dict, js and vendor in JavaScript Lemmatizer are must, so you can put it in your project like this.
+Directories of dict, js and vendor are must, so you can put it in your project like this.
 
 ```
 your-project
@@ -48,7 +55,9 @@ Or you can load jQuery and Underscore.js the way you like.
 
 ######3. Use JavaScript Lemmatizer in your JavaScript code according to the Usage.
 
-See also. [lemmatizer_sample.html](https://github.com/takafumir/javascript-lemmatizer/blob/master/html/lemmatizer_sample.html)
+See also.
+- [lemmatizer_sample.html](https://github.com/takafumir/javascript-lemmatizer/blob/master/html/lemmatizer_sample.html)
+- [Demo page](http://takafumir.github.io/javascript-lemmatizer/html/lemmatizer_sample.html)
 
 ## Usage
 
@@ -83,7 +92,9 @@ lemmatizer.only_lemmas('priorities');     // => [ 'priority' ]
 lemmatizer.only_lemmas('leaves');         // => [ 'leave', 'leaf' ]
 ```
 
-See also. [lemmatizer_sample.html](https://github.com/takafumir/javascript-lemmatizer/blob/master/html/lemmatizer_sample.html)
+See also.
+- [lemmatizer_sample.html](https://github.com/takafumir/javascript-lemmatizer/blob/master/html/lemmatizer_sample.html)
+- [Demo page](http://takafumir.github.io/javascript-lemmatizer/html/lemmatizer_sample.html)
 
 ## Limitations
 ```javascript
