@@ -13,14 +13,21 @@ JavaScript Lemmatizer depends on the following libraries.
 [Underscore.js](http://underscorejs.org/)
 
 ## Install
-1. Download and unzip JavaScript Lemmatizer.
-1. Load jQuery, Underscore.js and JavaScript Lemmatizer in your HTML like the following code, or you can load jQuery and Underscore.js the way you like.
+#####1. Download and unzip JavaScript Lemmatizer.
+
+#####2. Load jQuery, Underscore.js and JavaScript Lemmatizer in your HTML like the following code.
+
 ```html
 <script src="javascript-lemmatizer/vendor/js/jquery.js"></script>
 <script src="javascript-lemmatizer/vendor/js/underscore.js"></script>
 <script src="javascript-lemmatizer/js/lemmatizer.js"></script>
 ```
-1. Use JavaScript Lemmatizer in your HTML according to the Usage. See also. [lemmatizer_sample.html](https://github.com/takafumir/javascript-lemmatizer/blob/master/html/lemmatizer_sample.html)
+
+Or you can load jQuery and Underscore.js the way you like.
+
+#####3. Use JavaScript Lemmatizer in your HTML according to the Usage. 
+
+See also. [lemmatizer_sample.html](https://github.com/takafumir/javascript-lemmatizer/blob/master/html/lemmatizer_sample.html)
 
 ## Usage
 
@@ -59,18 +66,17 @@ See also. [lemmatizer_sample.html](https://github.com/takafumir/javascript-lemma
 
 ## Limitations
 ```javascript
-// Lemmatizer leaves alone words that its dictionary does not contain.
-// This keeps proper names such as "James" intact.
+// Lemmatizer leaves alone a word not included in it's dictionary index.
 lemmatizer.lemmas('MacBooks', 'noun');  // => [ ['MacBooks', 'noun'] ]
 ```
 
 ## Contribution
 
 1. Fork it ( https://github.com/takafumir/javascript-lemmatizer/fork )
-2. Create your feature branch (git checkout -b my-new-feature)
-3. Commit your changes (git commit -am 'Add some feature')
-4. Push to the branch (git push origin my-new-feature)
-5. Create a new Pull Request
+1. Create your feature branch (git checkout -b my-new-feature)
+1. Commit your changes (git commit -am 'Add some feature')
+1. Push to the branch (git push origin my-new-feature)
+1. Create a new Pull Request
 
 ## Licence
 
