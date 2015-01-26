@@ -17,7 +17,7 @@ JavaScript Lemmatizer depends on the following libraries.
 
 2. Load jQuery, Underscore.js and JavaScript Lemmatizer in your HTML like the following code, or you can load jQuery and Underscore.js the way you like.
 
-```
+```html
 <script src="javascript-lemmatizer/vendor/js/jquery.js"></script>
 <script src="javascript-lemmatizer/vendor/js/underscore.js"></script>
 <script src="javascript-lemmatizer/js/lemmatizer.js"></script>
@@ -29,12 +29,12 @@ JavaScript Lemmatizer depends on the following libraries.
 
 You can use Lemmatizer#lemmas or Lemmatizer#only_lemmas methods like the follwoing sample code.
 
-```
+```javascript
 // initialize Lemmatizer.
 var lemmatizer = new Lemmatizer();
 
 // retrieve a lemma with a part of speech.
-lemmatizer.lemmas('desks',  'noun');   [//]: // => [ ['desk', 'noun'] ]
+lemmatizer.lemmas('desks',  'noun');   // => [ ['desk', 'noun'] ]
 lemmatizer.lemmas('talked', 'verb');   // => [ ['talk', 'verb'] ]
 lemmatizer.lemmas('better', 'adj');    // => [ ['good', 'adj'] ]
 
