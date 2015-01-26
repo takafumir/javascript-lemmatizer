@@ -68,6 +68,7 @@ You can use `Lemmatizer#lemmas` or `Lemmatizer#only_lemmas` methods like the fol
 var lemmatizer = new Lemmatizer();
 
 // retrieve a lemma with a part of speech.
+// You can assign 'verb' or 'noun' or 'adj' or 'adv' as a part of speech.
 lemmatizer.lemmas('desks',  'noun');   // => [ ['desk', 'noun'] ]
 lemmatizer.lemmas('talked', 'verb');   // => [ ['talk', 'verb'] ]
 lemmatizer.lemmas('better', 'adj');    // => [ ['good', 'adj'] ]
