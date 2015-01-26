@@ -12,11 +12,15 @@
   <script type="text/javascript">
     var lemmatizer = new Lemmatizer();
 
+    function escapeHTML(val) {
+      return $('<div />').text(val).html();
+    };
+
     function display_lemma(form, pos) {
       if (!form) { return; }
       var html = '';
       _.each(lemmatizer.lemmas(form, pos), function(val) {
-        html = html + "The base form of '" + form + "' is '" + val[0] + "' as " + val[1] + ".<br />";
+        html = html + "The base form of '" + escapeHTML(form) + "' is '" + escapeHTML(val[0]) + "' as " + escapeHTML(val[1]) + ".<br />";
       });
       $("#lem-result").html(html);
     }
