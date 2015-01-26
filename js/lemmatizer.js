@@ -173,7 +173,7 @@ Lemmatizer.prototype = {
   open_file: function(key, file) {
     if (!localStorage[key]) {
       var self = this;
-      // when using async ajax, localStorage[key] return undefined at first. (186)
+      // when using async ajax, localStorage[key] return undefined at first.
       // $.get(file, function(data){
       //   self.store_data(key, data);
       // });
