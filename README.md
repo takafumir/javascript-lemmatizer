@@ -7,7 +7,7 @@ Inspired by [Ruby Lemmatizer](https://github.com/yohasebe/lemmatizer) but the re
 
 ## Demo
 
-Bundle a sample html in this library. The sample html code and the demo page are followings.
+A sample html is bundled in this library. The sample html code and the demo page are followings.
 
 - [lemmatizer_sample.html](https://github.com/takafumir/javascript-lemmatizer/blob/master/html/lemmatizer_sample.html)
 - [Demo page](http://takafumir.github.io/javascript-lemmatizer/html/lemmatizer_sample.html)
@@ -31,24 +31,25 @@ The operation check is conducted in the following web browsers with Mac OS X.
 ## Install
 ######1. Download and unzip JavaScript Lemmatizer, and then put it in your project.
 
-Directories of dict, js and vendor are must, so you can put it in your project like this.
+Directories of dict, js in JavaScript Lemmatizer are must, so you can put it in your project like this.
 
 ```
 your-project
 ├ index.html
-├ libraries
-    ├ javascript-lemmatizer
-        ├ dict
-        ├ js
-        ├ vendor
+├ javascript-lemmatizer
+    ├ dict
+    ├ js
+    ├ bower_components
+        ├ jquery
+        ├ underscore
 ```
 
 ######2. Load jQuery, Underscore.js and JavaScript Lemmatizer in your HTML like the following code.
 
 ```html
-<script src="libraries/javascript-lemmatizer/vendor/js/jquery.js"></script>
-<script src="libraries/javascript-lemmatizer/vendor/js/underscore.js"></script>
-<script src="libraries/javascript-lemmatizer/js/lemmatizer.js"></script>
+<script src="javascript-lemmatizer/bower_components/jquery/dist/jquery.js"></script>
+<script src="javascript-lemmatizer/bower_components/underscore/underscore.js"></script>
+<script src="javascript-lemmatizer/js/lemmatizer.js"></script>
 ```
 
 Or you can load jQuery and Underscore.js the way you like.
@@ -113,7 +114,7 @@ lemmatizer.lemmas('MacBooks', 'noun');  // => [ ['MacBooks', 'noun'] ]
 
 ## Licence
 
-[MIT License](https://github.com/takafumir/javascript-lemmatizer/blob/master/LICENCE.txt)
+[MIT License](https://github.com/takafumir/javascript-lemmatizer/blob/master/LICENSE)
 
 ## Author
 
