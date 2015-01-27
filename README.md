@@ -7,7 +7,7 @@ Inspired by [Ruby Lemmatizer](https://github.com/yohasebe/lemmatizer) but the re
 
 ## Demo
 
-Bundle a sample html in this library. The sample html code and the demo page are followings.
+A sample html is bundled in this library. The sample html code and the demo page are followings.
 
 - [lemmatizer_sample.html](https://github.com/takafumir/javascript-lemmatizer/blob/master/html/lemmatizer_sample.html)
 - [Demo page](http://takafumir.github.io/javascript-lemmatizer/html/lemmatizer_sample.html)
