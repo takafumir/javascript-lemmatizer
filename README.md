@@ -114,7 +114,7 @@ lemmatizer.lemmas('MacBooks', 'noun');  // => [ ['MacBooks', 'noun'] ]
 
 ## Licence
 
-[MIT License](https://github.com/takafumir/javascript-lemmatizer/blob/master/LICENCE.txt)
+[MIT License](https://github.com/takafumir/javascript-lemmatizer/blob/master/LICENSE)
 
 ## Author
 
