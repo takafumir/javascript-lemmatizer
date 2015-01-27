@@ -1,3 +1,10 @@
+/*
+* JavaScript Lemmatizer v0.0.1
+* MIT License
+*
+* by Takafumi Yamano
+*/
+
 // extend String and define String#endsWith
 String.prototype.endsWith = function(suffix) {
   return this.indexOf(suffix, this.length - suffix.length) !== -1;
