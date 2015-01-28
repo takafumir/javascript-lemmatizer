@@ -6,9 +6,11 @@
 */
 
 // extend String and define String#endsWith
-String.prototype.endsWith = function(suffix) {
-  return this.indexOf(suffix, this.length - suffix.length) !== -1;
-};
+if (typeof String.endsWith !== "function") {
+  String.prototype.endsWith = function(suffix) {
+    return this.indexOf(suffix, this.length - suffix.length) !== -1;
+  };
+}
 
 // Lemmatizer constructor
 var Lemmatizer = function() {
