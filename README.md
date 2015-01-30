@@ -29,7 +29,7 @@ The operation check is conducted in the following web browsers with Mac OS X.
 - Opera 25.0
 
 ## Install
-######1. Download and unzip JavaScript Lemmatizer, and then put it in your project.
+##### 1. Download and unzip JavaScript Lemmatizer, and then put it in your project.
 
 Directories of dict, js in JavaScript Lemmatizer are must, so you can put it in your project like this.
 
@@ -44,7 +44,7 @@ your-project
         ├ underscore
 ```
 
-######2. Load jQuery, Underscore.js and JavaScript Lemmatizer in your HTML like the following code.
+##### 2. Load jQuery, Underscore.js and JavaScript Lemmatizer in your HTML like the following code.
 
 ```html
 <script src="javascript-lemmatizer/bower_components/jquery/dist/jquery.js"></script>
@@ -54,7 +54,7 @@ your-project
 
 Or you can load jQuery and Underscore.js the way you like.
 
-######3. Use JavaScript Lemmatizer in your JavaScript code according to the Usage.
+##### 3. Use JavaScript Lemmatizer in your JavaScript code according to the Usage.
 
 See also.
 - [lemmatizer_sample.html](https://github.com/takafumir/javascript-lemmatizer/blob/master/html/lemmatizer_sample.html)
@@ -106,7 +106,7 @@ lemmatizer.lemmas('MacBooks', 'noun');  // => [ ['MacBooks', 'noun'] ]
 
 ## Changelog
 
-###### v0.0.2
+##### v0.0.2
 2015/01/30
 With v0.0.2, a returned value includes the input form word, when the input form word is included in the lemma dictionary index like the following.
 ```javascript
@@ -118,7 +118,7 @@ With v0.0.1
 lemmatizer.lemmas('matter');  // => [ ['matte', 'adj'], ['matt', 'adj'], ['mat', 'adj'] ]
 ```
 
-###### v0.0.1
+##### v0.0.1
 2015/01/27
 Released JavaScript Lemmatizer v0.0.1
 
