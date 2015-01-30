@@ -1,5 +1,5 @@
 /*
-* JavaScript Lemmatizer v0.0.1
+* JavaScript Lemmatizer v0.0.2
 * MIT License
 *
 * by Takafumi Yamano
@@ -256,7 +256,7 @@ Lemmatizer.prototype = {
     var lemmas = bases[0];
     var pos = bases[1];
     _.each( lemmas, function(lemma) {
-      if ( self.wordlists[pos][lemma] && self.wordlists[pos][lemma] == lemma && lemma != self.form ) {
+      if ( self.wordlists[pos][lemma] && self.wordlists[pos][lemma] == lemma ) {
         self.lems.push( [lemma, pos] );
       }
     });
