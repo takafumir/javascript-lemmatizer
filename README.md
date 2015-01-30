@@ -72,19 +72,19 @@ var lemmatizer = new Lemmatizer();
 // you can assign 'verb' or 'noun' or 'adj' or 'adv' as a part of speech.
 lemmatizer.lemmas('desks',  'noun');   // => [ ['desk', 'noun'] ]
 lemmatizer.lemmas('talked', 'verb');   // => [ ['talk', 'verb'] ]
-lemmatizer.lemmas('better', 'adj');    // => [ ['good', 'adj'] ]
 
 // of course, available for irregular iflected form words.
 lemmatizer.lemmas('went', 'verb');     // => [ ['go', 'verb'] ]
 lemmatizer.lemmas('written', 'verb');  // => [ ['write', 'verb'] ]
+lemmatizer.lemmas('better', 'adj');    // => [ ['good', 'adj'] ]
 
 // when multiple base forms are found, return all of them.
 lemmatizer.lemmas('coded', 'verb');    // => [ ['cod', 'verb'], ['code', 'verb'] ]
 lemmatizer.lemmas('leaves', 'noun');   // => [ ['leave', 'noun'], ['leaf', 'noun'] ]
 
 // retrieve a lemma without a part of speech.
-lemmatizer.lemmas('sitting');  // => [ ['sit', 'verb'] ]
-lemmatizer.lemmas('oxen');     // => [ ['ox', 'noun'] ]
+lemmatizer.lemmas('sitting');  // => [ ['sit', 'verb'], ['sitting', 'noun'], ['sitting', 'adj'] ]
+lemmatizer.lemmas('oxen');     // => [ ['oxen', 'noun'], ['ox', 'noun'] ]
 lemmatizer.lemmas('leaves');   // => [ ['leave', 'verb'], ['leave', 'noun'], ['leaf', 'noun'] ]
 
 // retrieve only lemmas not including part of speeches in the returned value.
@@ -103,6 +103,24 @@ See also.
 // Lemmatizer leaves alone a word not included in it's dictionary index.
 lemmatizer.lemmas('MacBooks', 'noun');  // => [ ['MacBooks', 'noun'] ]
 ```
+
+## Changelog
+
+###### v0.0.2
+2015/01/30
+With v0.0.2, a returned value includes the input form word, when the input form word is included in the lemma dictionary index like the following.
+```javascript
+lemmatizer.lemmas('matter');  // => [ ['matter', 'verb'], ['matter', 'noun'], ['matte', 'adj'], ['matt', 'adj'], ['mat', 'adj'] ]
+```
+
+With v0.0.1
+```javascript
+lemmatizer.lemmas('matter');  // => [ ['matte', 'adj'], ['matt', 'adj'], ['mat', 'adj'] ]
+```
+
+###### v0.0.1
+2015/01/27
+Released JavaScript Lemmatizer v0.0.1
 
 ## Contribution
 

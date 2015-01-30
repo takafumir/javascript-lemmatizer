@@ -18,8 +18,8 @@ QUnit.test( 'JavaScript Lemmatizer QUnit Tests', function( assert ) {
   
   // Lemmatizer give a result even when no pos is given, by assuming it to be :verb, :noun, :adv, or :adj.
   assert.deepEqual( lem.lemmas('plays'), [ ['play', 'verb'], ['play', 'noun'] ] );
-  assert.deepEqual( lem.lemmas('oxen'), [ ['ox', 'noun'] ] );
-  assert.deepEqual( lem.lemmas('fired'), [ ['fire', 'verb'] ] );
+  assert.deepEqual( lem.lemmas('oxen'), [ ['oxen', 'noun'], ['ox', 'noun'] ] );
+  assert.deepEqual( lem.lemmas('fired'), [ ['fire', 'verb'], ['fired', 'adj'] ] );
   assert.deepEqual( lem.lemmas('slower'), [ ['slow', 'adv'], ['slow', 'adj'] ] );
 
   // non-existing word
@@ -86,24 +86,27 @@ QUnit.test( 'JavaScript Lemmatizer QUnit Tests', function( assert ) {
   assert.deepEqual( lem.lemmas('leaves', 'noun'), [ ['leave', 'noun'], ['leaf', 'noun'] ] );
   assert.deepEqual( lem.lemmas('player', 'noun'), [ ['player', 'noun'] ] );
   assert.deepEqual( lem.lemmas('priorities', 'noun'), [ ['priority', 'noun'] ] );
+  assert.deepEqual( lem.lemmas('matter', 'verb'), [ ['matter', 'verb'] ] );
+  assert.deepEqual( lem.lemmas('matter', 'noun'), [ ['matter', 'noun'] ] );
+  assert.deepEqual( lem.lemmas('matter', 'adj'), [ ['matte', 'adj'], ['matt', 'adj'], ['mat', 'adj'] ] );
 
   // various test without pos
   assert.deepEqual( lem.lemmas('goes'), [ ['go', 'verb'], ['go', 'noun'] ] );
   assert.deepEqual( lem.lemmas('went'), [ ['go', 'verb'] ] );
-  assert.deepEqual( lem.lemmas('gone'), [ ['go', 'verb'] ] );
+  assert.deepEqual( lem.lemmas('gone'), [ ['go', 'verb'], ['gone', 'adj'] ] );
   assert.deepEqual( lem.lemmas('writes'), [ ['write', 'verb'] ] );
   assert.deepEqual( lem.lemmas('wrote'), [ ['write', 'verb'] ] );
-  assert.deepEqual( lem.lemmas('written'), [ ['write', 'verb'] ] );
+  assert.deepEqual( lem.lemmas('written'), [ ['write', 'verb'], ['written', 'adj'] ] );
   assert.deepEqual( lem.lemmas('confirms'), [ ['confirm', 'verb'] ] );
-  assert.deepEqual( lem.lemmas('confirmed'), [ ['confirm', 'verb'] ] );
-  assert.deepEqual( lem.lemmas('confirming'), [ ['confirm', 'verb'] ] );
+  assert.deepEqual( lem.lemmas('confirmed'), [ ['confirm', 'verb'], ['confirmed', 'adj'] ] );
+  assert.deepEqual( lem.lemmas('confirming'), [ ['confirm', 'verb'], ['confirming', 'adj'] ] );
   assert.deepEqual( lem.lemmas('acidless'), [ ['acidless', ''] ] );
   assert.deepEqual( lem.lemmas('pizzas'), [ ['pizza', 'noun'] ] );
   assert.deepEqual( lem.lemmas('foxes'), [ ['fox', 'verb'], ['fox', 'noun'] ] );
   assert.deepEqual( lem.lemmas('hacked'), [ ['hack', 'verb'] ] );
   assert.deepEqual( lem.lemmas('coded'), [ ['cod', 'verb'], ['code', 'verb'] ] );
-  assert.deepEqual( lem.lemmas('fitting'), [ ['fit', 'verb'] ] );
-  assert.deepEqual( lem.lemmas('coding'), [ ['cod', 'verb'], ['code', 'verb'] ] );
+  assert.deepEqual( lem.lemmas('fitting'), [ ['fit', 'verb'], ['fitting', 'noun'], ['fitting', 'adj'] ] );
+  assert.deepEqual( lem.lemmas('coding'), [ ['cod', 'verb'], ['code', 'verb'], ['coding', 'noun'] ] );
   assert.deepEqual( lem.lemmas('pirouetting'), [ ['pirouette', 'verb'] ] );
   assert.deepEqual( lem.lemmas('hacking'), [ ['hack', 'verb'] ] );
   assert.deepEqual( lem.lemmas('earliest'), [ ['early', 'adv'], ['early', 'adj'] ] );
@@ -122,14 +125,14 @@ QUnit.test( 'JavaScript Lemmatizer QUnit Tests', function( assert ) {
   assert.deepEqual( lem.lemmas('starts'), [ ['start', 'verb'], ['start', 'noun'] ] );
   assert.deepEqual( lem.lemmas('teaches'), [ ['teach', 'verb'], ['teach', 'noun'] ] );
   assert.deepEqual( lem.lemmas('talked'), [ ['talk', 'verb'] ] );
-  assert.deepEqual( lem.lemmas('saved'), [ ['save', 'verb'] ] );
-  assert.deepEqual( lem.lemmas('sitting'), [ ['sit', 'verb'] ] );
+  assert.deepEqual( lem.lemmas('saved'), [ ['save', 'verb'], ['saved', 'adj'] ] );
+  assert.deepEqual( lem.lemmas('sitting'), [ ['sit', 'verb'], ['sitting', 'noun'], ['sitting', 'adj'] ] );
   assert.deepEqual( lem.lemmas('having'), [ ['have', 'verb'] ] );
-  assert.deepEqual( lem.lemmas('talking'), [ ['talk', 'verb'] ] );
+  assert.deepEqual( lem.lemmas('talking'), [ ['talk', 'verb'], ['talking', 'noun'] ] );
   assert.deepEqual( lem.lemmas('heavier'), [ ['heavy', 'adv'], ['heavy', 'adj'] ] );
   assert.deepEqual( lem.lemmas('bigger'), [ ['big', 'adv'], ['big', 'adj'] ] );
   assert.deepEqual( lem.lemmas('huger'), [ ['huge', 'adj'] ] );
-  assert.deepEqual( lem.lemmas('lower'), [ ['low', 'adv'], ['low', 'adj'] ] );
+  assert.deepEqual( lem.lemmas('lower'), [ ['lower', 'verb'], ['lower', 'noun'], ['low', 'adv'], ['low', 'adj'] ] );
   assert.deepEqual( lem.lemmas('writable'), [ ['writable', ''] ] );
   assert.deepEqual( lem.lemmas('readable'), [ ['readable', 'adj'] ] );
   assert.deepEqual( lem.lemmas('readability'), [ ['readability', 'noun'] ] );
@@ -143,11 +146,12 @@ QUnit.test( 'JavaScript Lemmatizer QUnit Tests', function( assert ) {
   assert.deepEqual( lem.lemmas('lowest'), [ ['low', 'adv'], ['low', 'adj'] ] );
   assert.deepEqual( lem.lemmas('heavier'), [ ['heavy', 'adv'], ['heavy', 'adj'] ] );
   assert.deepEqual( lem.lemmas('bigger'), [ ['big', 'adv'], ['big', 'adj'] ] );
-  assert.deepEqual( lem.lemmas('lower'), [ ['low', 'adv'], ['low', 'adj'] ] );
+  assert.deepEqual( lem.lemmas('lower'), [ ['lower', 'verb'], ['lower', 'noun'], ['low', 'adv'], ['low', 'adj'] ] );
   assert.deepEqual( lem.lemmas('higher'), [ ['high', 'adv'], ['high', 'adj'] ] );
   assert.deepEqual( lem.lemmas('leaves'), [ ['leave', 'verb'], ['leave', 'noun'], ['leaf', 'noun'] ] );
   assert.deepEqual( lem.lemmas('player'), [ ['player', 'noun'] ] );
   assert.deepEqual( lem.lemmas('priorities'), [ ['priority', 'noun'] ] );
+  assert.deepEqual( lem.lemmas('matter'), [ ['matter', 'verb'], ['matter', 'noun'], ['matte', 'adj'], ['matt', 'adj'], ['mat', 'adj'] ] );
 
   // **************************************************
   // only_lemmas tests
@@ -169,8 +173,8 @@ QUnit.test( 'JavaScript Lemmatizer QUnit Tests', function( assert ) {
   
   // Lemmatizer give a result even when no pos is given, by assuming it to be :verb, :noun, :adv, or :adj.
   assert.deepEqual( lem.only_lemmas('plays'), [ 'play' ] );
-  assert.deepEqual( lem.only_lemmas('oxen'), [ 'ox' ] );
-  assert.deepEqual( lem.only_lemmas('fired'), [ 'fire' ] );
+  assert.deepEqual( lem.only_lemmas('oxen'), [ 'oxen', 'ox' ] );
+  assert.deepEqual( lem.only_lemmas('fired'), [ 'fire', 'fired' ] );
   assert.deepEqual( lem.only_lemmas('slower'), [ 'slow' ] );
 
   // non-existing word
@@ -237,24 +241,27 @@ QUnit.test( 'JavaScript Lemmatizer QUnit Tests', function( assert ) {
   assert.deepEqual( lem.only_lemmas('leaves', 'noun'), [ 'leave', 'leaf' ] );
   assert.deepEqual( lem.only_lemmas('player', 'noun'), [ 'player' ] );
   assert.deepEqual( lem.only_lemmas('priorities', 'noun'), [ 'priority' ] );
+  assert.deepEqual( lem.only_lemmas('matter', 'verb'), [ 'matter' ] );
+  assert.deepEqual( lem.only_lemmas('matter', 'noun'), [ 'matter' ] );
+  assert.deepEqual( lem.only_lemmas('matter', 'adj'), [ 'matte', 'matt', 'mat' ] );
 
   // various test without pos
   assert.deepEqual( lem.only_lemmas('goes'), [ 'go' ] );
   assert.deepEqual( lem.only_lemmas('went'), [ 'go' ] );
-  assert.deepEqual( lem.only_lemmas('gone'), [ 'go' ] );
+  assert.deepEqual( lem.only_lemmas('gone'), [ 'go', 'gone' ] );
   assert.deepEqual( lem.only_lemmas('writes'), [ 'write' ] );
   assert.deepEqual( lem.only_lemmas('wrote'), [ 'write' ] );
-  assert.deepEqual( lem.only_lemmas('written'), [ 'write' ] );
+  assert.deepEqual( lem.only_lemmas('written'), [ 'write', 'written' ] );
   assert.deepEqual( lem.only_lemmas('confirms'), [ 'confirm' ] );
-  assert.deepEqual( lem.only_lemmas('confirmed'), [ 'confirm' ] );
-  assert.deepEqual( lem.only_lemmas('confirming'), [ 'confirm' ] );
+  assert.deepEqual( lem.only_lemmas('confirmed'), [ 'confirm', 'confirmed' ] );
+  assert.deepEqual( lem.only_lemmas('confirming'), [ 'confirm', 'confirming' ] );
   assert.deepEqual( lem.only_lemmas('acidless'), [ 'acidless' ] );
   assert.deepEqual( lem.only_lemmas('pizzas'), [ 'pizza' ] );
   assert.deepEqual( lem.only_lemmas('foxes'), [ 'fox' ] );
   assert.deepEqual( lem.only_lemmas('hacked'), [ 'hack' ] );
   assert.deepEqual( lem.only_lemmas('coded'), [ 'cod', 'code' ] );
-  assert.deepEqual( lem.only_lemmas('fitting'), [ 'fit' ] );
-  assert.deepEqual( lem.only_lemmas('coding'), [ 'cod', 'code' ] );
+  assert.deepEqual( lem.only_lemmas('fitting'), [ 'fit', 'fitting' ] );
+  assert.deepEqual( lem.only_lemmas('coding'), [ 'cod', 'code', 'coding' ] );
   assert.deepEqual( lem.only_lemmas('pirouetting'), [ 'pirouette' ] );
   assert.deepEqual( lem.only_lemmas('hacking'), [ 'hack' ] );
   assert.deepEqual( lem.only_lemmas('earliest'), [ 'early' ] );
@@ -273,14 +280,14 @@ QUnit.test( 'JavaScript Lemmatizer QUnit Tests', function( assert ) {
   assert.deepEqual( lem.only_lemmas('starts'), [ 'start' ] );
   assert.deepEqual( lem.only_lemmas('teaches'), [ 'teach' ] );
   assert.deepEqual( lem.only_lemmas('talked'), [ 'talk' ] );
-  assert.deepEqual( lem.only_lemmas('saved'), [ 'save' ] );
-  assert.deepEqual( lem.only_lemmas('sitting'), [ 'sit' ] );
+  assert.deepEqual( lem.only_lemmas('saved'), [ 'save', 'saved' ] );
+  assert.deepEqual( lem.only_lemmas('sitting'), [ 'sit', 'sitting' ] );
   assert.deepEqual( lem.only_lemmas('having'), [ 'have' ] );
-  assert.deepEqual( lem.only_lemmas('talking'), [ 'talk' ] );
+  assert.deepEqual( lem.only_lemmas('talking'), [ 'talk', 'talking' ] );
   assert.deepEqual( lem.only_lemmas('heavier'), [ 'heavy' ] );
   assert.deepEqual( lem.only_lemmas('bigger'), [ 'big' ] );
   assert.deepEqual( lem.only_lemmas('huger'), [ 'huge' ] );
-  assert.deepEqual( lem.only_lemmas('lower'), [ 'low' ] );
+  assert.deepEqual( lem.only_lemmas('lower'), [ 'lower', 'low' ] );
   assert.deepEqual( lem.only_lemmas('writable'), [ 'writable' ] );
   assert.deepEqual( lem.only_lemmas('readable'), [ 'readable' ] );
   assert.deepEqual( lem.only_lemmas('readability'), [ 'readability' ] );
@@ -294,9 +301,10 @@ QUnit.test( 'JavaScript Lemmatizer QUnit Tests', function( assert ) {
   assert.deepEqual( lem.only_lemmas('lowest'), [ 'low' ] );
   assert.deepEqual( lem.only_lemmas('heavier'), [ 'heavy' ] );
   assert.deepEqual( lem.only_lemmas('bigger'), [ 'big' ] );
-  assert.deepEqual( lem.only_lemmas('lower'), [ 'low' ] );
+  assert.deepEqual( lem.only_lemmas('lower'), [ 'lower', 'low' ] );
   assert.deepEqual( lem.only_lemmas('higher'), [ 'high' ] );
   assert.deepEqual( lem.only_lemmas('leaves'), [ 'leave', 'leaf' ] );
   assert.deepEqual( lem.only_lemmas('player'), [ 'player' ] );
   assert.deepEqual( lem.only_lemmas('priorities'), [ 'priority' ] );
+  assert.deepEqual( lem.only_lemmas('matter'), [ 'matter', 'matte', 'matt', 'mat' ] );
 });
