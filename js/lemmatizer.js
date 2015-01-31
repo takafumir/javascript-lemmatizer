@@ -271,7 +271,7 @@ Lemmatizer.prototype = {
       var morpho = entry[0];
       var origin = entry[1];
       if ( form.endsWith(morpho) ) {
-        if ( pos == 'verb' && morpho == 'ing' && self.double_consonant(morpho) ) {
+        if ( pos == 'verb' && (morpho == 'ing' || morpho == 'ed') && self.double_consonant(morpho) ) {
           lemmas.push( form.slice( 0, -(morpho.length + 1) + origin ) );
         }
         if ( (pos == 'adj' || pos == 'adv') && morpho == 'est' && self.double_consonant(morpho) ) {
