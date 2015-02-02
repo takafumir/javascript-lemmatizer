@@ -288,11 +288,17 @@ Lemmatizer.prototype = {
     } else if ( form.endsWith('ed') && this.double_consonant('ed') ) {
       // dragged -> drag
       lemmas.push( form.slice( 0, -3 ) );
+      // added -> add
+      lemmas.push( form.slice( 0, -2 ) );
+      // pirouetted -> pirouette
+      lemmas.push( form.slice( 0, -2 ) + 'e' );
     } else if ( form.endsWith('ing') && this.double_consonant('ing') ) {
       // dragging -> drag
       lemmas.push( form.slice( 0, -4 ) );
+      // adding -> add
+      lemmas.push( form.slice( 0, -3 ) );
       // pirouetting -> pirouette
-      lemmas.push( form.slice( 0, -3 ) + "e" );
+      lemmas.push( form.slice( 0, -3 ) + 'e' );
     } else if ( form.endsWith('ing') ) {
       // coding -> code
       var ing_base = form.slice( 0, -3 ) + 'e';
