@@ -39,9 +39,9 @@ QUnit.test( 'JavaScript Lemmatizer QUnit Tests', function( assert ) {
   assert.deepEqual( lem.lemmas('pizzas', 'noun'), [ ['pizza', 'noun'] ] );
   assert.deepEqual( lem.lemmas('foxes', 'noun'), [ ['fox', 'noun'] ] );
   assert.deepEqual( lem.lemmas('hacked', 'verb'), [ ['hack', 'verb'] ] );
-  assert.deepEqual( lem.lemmas('coded', 'verb'), [ ['cod', 'verb'], ['code', 'verb'] ] );
+  assert.deepEqual( lem.lemmas('coded', 'verb'), [ ['code', 'verb'] ] );
   assert.deepEqual( lem.lemmas('fitting', 'verb'), [ ['fit', 'verb'] ] );
-  assert.deepEqual( lem.lemmas('coding', 'verb'), [ ['cod', 'verb'], ['code', 'verb'] ] );
+  assert.deepEqual( lem.lemmas('coding', 'verb'), [ ['code', 'verb'] ] );
   assert.deepEqual( lem.lemmas('pirouetting', 'verb'), [ ['pirouette', 'verb'] ] );
   assert.deepEqual( lem.lemmas('hacking', 'verb'), [ ['hack', 'verb'] ] );
   assert.deepEqual( lem.lemmas('earliest', 'adj'), [ ['early', 'adj'] ] );
@@ -104,9 +104,9 @@ QUnit.test( 'JavaScript Lemmatizer QUnit Tests', function( assert ) {
   assert.deepEqual( lem.lemmas('pizzas'), [ ['pizza', 'noun'] ] );
   assert.deepEqual( lem.lemmas('foxes'), [ ['fox', 'verb'], ['fox', 'noun'] ] );
   assert.deepEqual( lem.lemmas('hacked'), [ ['hack', 'verb'] ] );
-  assert.deepEqual( lem.lemmas('coded'), [ ['cod', 'verb'], ['code', 'verb'] ] );
+  assert.deepEqual( lem.lemmas('coded'), [ ['code', 'verb'] ] );
   assert.deepEqual( lem.lemmas('fitting'), [ ['fit', 'verb'], ['fitting', 'noun'], ['fitting', 'adj'] ] );
-  assert.deepEqual( lem.lemmas('coding'), [ ['cod', 'verb'], ['code', 'verb'], ['coding', 'noun'] ] );
+  assert.deepEqual( lem.lemmas('coding'), [ ['code', 'verb'], ['coding', 'noun'] ] );
   assert.deepEqual( lem.lemmas('pirouetting'), [ ['pirouette', 'verb'] ] );
   assert.deepEqual( lem.lemmas('hacking'), [ ['hack', 'verb'] ] );
   assert.deepEqual( lem.lemmas('earliest'), [ ['early', 'adv'], ['early', 'adj'] ] );
@@ -194,9 +194,9 @@ QUnit.test( 'JavaScript Lemmatizer QUnit Tests', function( assert ) {
   assert.deepEqual( lem.only_lemmas('pizzas', 'noun'), [ 'pizza' ] );
   assert.deepEqual( lem.only_lemmas('foxes', 'noun'), [ 'fox' ] );
   assert.deepEqual( lem.only_lemmas('hacked', 'verb'), [ 'hack' ] );
-  assert.deepEqual( lem.only_lemmas('coded', 'verb'), [ 'cod', 'code' ] );
+  assert.deepEqual( lem.only_lemmas('coded', 'verb'), [ 'code' ] );
   assert.deepEqual( lem.only_lemmas('fitting', 'verb'), [ 'fit' ] );
-  assert.deepEqual( lem.only_lemmas('coding', 'verb'), [ 'cod', 'code' ] );
+  assert.deepEqual( lem.only_lemmas('coding', 'verb'), [ 'code' ] );
   assert.deepEqual( lem.only_lemmas('pirouetting', 'verb'), [ 'pirouette' ] );
   assert.deepEqual( lem.only_lemmas('hacking', 'verb'), [ 'hack' ] );
   assert.deepEqual( lem.only_lemmas('earliest', 'adj'), [ 'early' ] );
@@ -259,9 +259,9 @@ QUnit.test( 'JavaScript Lemmatizer QUnit Tests', function( assert ) {
   assert.deepEqual( lem.only_lemmas('pizzas'), [ 'pizza' ] );
   assert.deepEqual( lem.only_lemmas('foxes'), [ 'fox' ] );
   assert.deepEqual( lem.only_lemmas('hacked'), [ 'hack' ] );
-  assert.deepEqual( lem.only_lemmas('coded'), [ 'cod', 'code' ] );
+  assert.deepEqual( lem.only_lemmas('coded'), [ 'code' ] );
   assert.deepEqual( lem.only_lemmas('fitting'), [ 'fit', 'fitting' ] );
-  assert.deepEqual( lem.only_lemmas('coding'), [ 'cod', 'code', 'coding' ] );
+  assert.deepEqual( lem.only_lemmas('coding'), [ 'code', 'coding' ] );
   assert.deepEqual( lem.only_lemmas('pirouetting'), [ 'pirouette' ] );
   assert.deepEqual( lem.only_lemmas('hacking'), [ 'hack' ] );
   assert.deepEqual( lem.only_lemmas('earliest'), [ 'early' ] );
