@@ -88,7 +88,7 @@ Lemmatizer.prototype = {
   form: '',
   idx: '_idx',
   exc: '_exc',
-  lems: [], // -> [ [lemma1, "verb"], [lemma2, "noun"]... ]
+  lems: [], // -> [ ["lemma1", "verb"], ["lemma2", "noun"]... ]
 
   // **************************************************
   // public
