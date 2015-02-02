@@ -72,6 +72,7 @@ var lemmatizer = new Lemmatizer();
 // you can assign 'verb' or 'noun' or 'adj' or 'adv' as a part of speech.
 lemmatizer.lemmas('desks',  'noun');   // => [ ['desk', 'noun'] ]
 lemmatizer.lemmas('talked', 'verb');   // => [ ['talk', 'verb'] ]
+lemmatizer.lemmas('coded', 'verb');    // => [ ['code', 'verb'] ]
 
 // of course, available for irregular iflected form words.
 lemmatizer.lemmas('went', 'verb');     // => [ ['go', 'verb'] ]
@@ -79,7 +80,6 @@ lemmatizer.lemmas('written', 'verb');  // => [ ['write', 'verb'] ]
 lemmatizer.lemmas('better', 'adj');    // => [ ['good', 'adj'] ]
 
 // when multiple base forms are found, return all of them.
-lemmatizer.lemmas('coded', 'verb');    // => [ ['cod', 'verb'], ['code', 'verb'] ]
 lemmatizer.lemmas('leaves', 'noun');   // => [ ['leave', 'noun'], ['leaf', 'noun'] ]
 
 // retrieve a lemma without a part of speech.
@@ -89,7 +89,7 @@ lemmatizer.lemmas('leaves');   // => [ ['leave', 'verb'], ['leave', 'noun'], ['l
 
 // retrieve only lemmas not including part of speeches in the returned value.
 lemmatizer.only_lemmas('desks', 'noun');  // => [ 'desk' ]
-lemmatizer.only_lemmas('coded', 'verb');  // => [ 'cod', 'code' ]
+lemmatizer.only_lemmas('coded', 'verb');  // => [ 'code' ]
 lemmatizer.only_lemmas('priorities');     // => [ 'priority' ]
 lemmatizer.only_lemmas('leaves');         // => [ 'leave', 'leaf' ]
 ```
