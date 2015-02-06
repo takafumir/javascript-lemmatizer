@@ -172,12 +172,6 @@ Lemmatizer.prototype = {
   open_file: function(key, file) {
     if (!localStorage.getItem(key)) {
       var self = this;
-      // when using async ajax, localStorage.getItem(key) return null at first.
-      // $.get(file, function(data){
-      //   self.store_data( key, JSON.stringify(data) );
-      // });
-
-      // so use sync networking only at the first time.
       $.ajax({
         url: file,
         type: 'get',
@@ -424,28 +418,5 @@ Lemmatizer.prototype = {
       }
     });
     return result;
-  },
-
-  // for debug to use like $('#lem-confirm').html( lem.confirm_dic('exc') )
-  confirm_dic: function(type) {
-    var words = null;
-    if (type == 'exc') {
-      words = this.exceptions;
-    } else if (type == 'idx') {
-      words = this.wordlists;
-    }
-    var html = '*** ' + type + ' ***<br />';
-    var parts = ['verb', 'noun', 'adj', 'adv'];
-    var len = parts.length;
-    for (var i = 0; i < len; i++) {
-      var pos = parts[i];
-      var pos_comment = '--- ' + pos + ' ---<br />';
-      var html = html + pos_comment;
-      for (var w in words[pos]) {
-        var item = w + ' -> ' + words[pos][w] + '<br />';
-        var html = html + item;
-      }
-    }
-    return html;
   }
 };
