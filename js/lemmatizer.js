@@ -158,11 +158,11 @@ Lemmatizer.prototype = {
   setup_dic_data: function(pos) {
     var self = this;
     var key_idx = pos + this.idx;
-    _.each( this.fetch_idx_data(key_idx), function(w) {
+    _.each( this.fetch_data(key_idx), function(w) {
       self.wordlists[pos][w] = w;
     });
     var key_exc = pos + this.exc; 
-    _.each( this.fetch_exc_data(key_exc), function(item) {
+    _.each( this.fetch_data(key_exc), function(item) {
       var w = item[0];
       var s = item[1];
       self.exceptions[pos][w] = s;
@@ -170,11 +170,11 @@ Lemmatizer.prototype = {
   },
 
   open_file: function(key, file) {
-    if (!localStorage[key]) {
+    if (!localStorage.getItem(key)) {
       var self = this;
-      // when using async ajax, localStorage[key] return undefined at first.
+      // when using async ajax, localStorage.getItem(key) return null at first.
       // $.get(file, function(data){
-      //   self.store_data(key, data);
+      //   self.store_data( key, JSON.stringify(data) );
       // });
 
       // so use sync networking only at the first time.
@@ -183,37 +183,19 @@ Lemmatizer.prototype = {
         type: 'get',
         async: false,
         success: function(data) {
-          self.store_data(key, data);
+          self.store_data( key, JSON.stringify(data) );
         }
       });
     }
   },
 
   store_data: function(key, data) {
-    localStorage[key] = data;
+    localStorage.setItem(key, data);
   },
 
-  // somehow JSON.parse(localStorage[key]) does not work, so build array data from string.
-  fetch_idx_data: function(key) {
-    arr = localStorage[key].split(',');
-    return arr;
-  },
-
-  fetch_exc_data: function(key) {
-    data = localStorage[key].split(',');
-    var len = data.length;
-    var index = 0;
-    var arr = [];
-    for (var i = 0; i < len; i++) {
-      if (i % 2 != 0) {
-        continue;
-      }
-      arr[index] = [];
-      arr[index][0] = data[i];
-      arr[index][1] = data[i+1];
-      index++;
-    }
-    return arr;
+  fetch_data: function(key) {
+    var data = JSON.parse(localStorage.getItem(key));
+    return data;
   },
   // end of set up dictionary data
 
