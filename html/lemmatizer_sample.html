@@ -33,15 +33,37 @@
       });
 
       $('#lem-exc-button').click( function() {
-        $('#lem-confirm').html( lemmatizer.confirm_dic('exc') );
+        $('#lem-confirm').html( confirm_dic('exc') );
       });
 
       $('#lem-list-button').click( function() {
         // index data is much larger than excptions data.
-        $('#lem-confirm').html( lemmatizer.confirm_dic('idx') ); 
+        $('#lem-confirm').html( confirm_dic('idx') );
       });
     });
 
+    // for debug to use like $('#lem-confirm').html( confirm_dic('exc') )
+    function confirm_dic(type) {
+      var words = null;
+      if (type == 'exc') {
+        words = lemmatizer.exceptions;
+      } else if (type == 'idx') {
+        words = lemmatizer.wordlists;
+      }
+      var html = '*** ' + type + ' ***<br />';
+      var parts = ['verb', 'noun', 'adj', 'adv'];
+      var len = parts.length;
+      for (var i = 0; i < len; i++) {
+        var pos = parts[i];
+        var pos_comment = '--- ' + pos + ' ---<br />';
+        var html = html + pos_comment;
+        for (var w in words[pos]) {
+          var item = w + ' -> ' + words[pos][w] + '<br />';
+          var html = html + item;
+        }
+      }
+      return html;
+    }
   </script>
 
   <form action="">
