@@ -43,7 +43,11 @@ var Lemmatizer = function() {
       ['ies', 'y'],
       ['ied', 'y'],
       ['cked', 'c'],
-      ['cked', 'ck']
+      ['cked', 'ck'],
+      ['able', 'e'],
+      ['able', ''],
+      ['ability', 'e'],
+      ['ability', '']
     ],
     adj:  [
       ['er',  '' ],
@@ -279,7 +283,11 @@ Lemmatizer.prototype = {
         // talking -> talk, but not push like coding -> cod
         lemmas.push( form.slice( 0, -3 ) );
       }
-    } else if ( form.endsWith('s') ) {
+    } else if ( form.endsWith('able') && this.double_consonant('able') ) {
+      lemmas.push( form.slice( 0, -5 ) );
+    } else if ( form.endsWith('ability') && this.double_consonant('ability') ) {
+      lemmas.push( form.slice( 0, -8 ) );
+     } else if ( form.endsWith('s') ) {
       lemmas.push( form.slice( 0, -1 ) );
     }
 
