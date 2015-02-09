@@ -5,6 +5,12 @@ JavaScript Lemmatizer is a lemmatization library for JavaScript to retrieve a ba
 
 Inspired by [Ruby Lemmatizer](https://github.com/yohasebe/lemmatizer) but the returned values and the algorithm are different from it.
 
+## Requirements
+
+Depends on Underscore.js.
+
+- [Underscore.js](http://underscorejs.org/)
+
 ## Demo
 
 A sample html is bundled in this library. The sample html code and the demo page are followings.
@@ -12,12 +18,9 @@ A sample html is bundled in this library. The sample html code and the demo page
 - [lemmatizer_sample.html](https://github.com/takafumir/javascript-lemmatizer/blob/master/html/lemmatizer_sample.html)
 - [Demo page](http://takafumir.github.io/javascript-lemmatizer/html/lemmatizer_sample.html)
 
-## Requirements
-
-Depends on the following libraries.
+The sample html code depends on jQuery.
 
 - [jQuery](http://jquery.com/)
-- [Underscore.js](http://underscorejs.org/)
 
 ## Check
 
@@ -44,15 +47,22 @@ your-project
         ├ underscore
 ```
 
-##### 2. Load jQuery, Underscore.js and JavaScript Lemmatizer in your HTML like the following code.
+##### 2. Load Underscore.js and JavaScript Lemmatizer in your HTML like the following code.
+
+```html
+<script src="javascript-lemmatizer/bower_components/underscore/underscore.js"></script>
+<script src="javascript-lemmatizer/js/lemmatizer.js"></script>
+```
+
+Or you can load Underscore.js the way you like.
+
+As an option, you can load jQuery, if you need it in your project.
 
 ```html
 <script src="javascript-lemmatizer/bower_components/jquery/dist/jquery.js"></script>
 <script src="javascript-lemmatizer/bower_components/underscore/underscore.js"></script>
 <script src="javascript-lemmatizer/js/lemmatizer.js"></script>
 ```
-
-Or you can load jQuery and Underscore.js the way you like.
 
 ##### 3. Use JavaScript Lemmatizer in your JavaScript code according to the Usage.
 
