@@ -1,7 +1,7 @@
 /*
 * JavaScript Lemmatizer v0.0.2
+* https://github.com/takafumir/javascript-lemmatizer
 * MIT License
-*
 * by Takafumi Yamano
 */
 
