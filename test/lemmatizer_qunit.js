@@ -90,6 +90,7 @@ QUnit.test( 'JavaScript Lemmatizer QUnit Tests', function( assert ) {
   assert.deepEqual( lem.lemmas('matter', 'noun'), [ ['matter', 'noun'] ] );
   assert.deepEqual( lem.lemmas('matter', 'adj'), [ ['matte', 'adj'], ['matt', 'adj'], ['mat', 'adj'] ] );
   assert.deepEqual( lem.lemmas('added', 'verb'), [ ['add', 'verb'] ] );
+  assert.deepEqual( lem.lemmas('opposes', 'verb'), [ ['oppose', 'verb' ] ] );
 
   // various test without pos
   assert.deepEqual( lem.lemmas('goes'), [ ['go', 'verb'], ['go', 'noun'] ] );
@@ -155,6 +156,7 @@ QUnit.test( 'JavaScript Lemmatizer QUnit Tests', function( assert ) {
   assert.deepEqual( lem.lemmas('priorities'), [ ['priority', 'noun'] ] );
   assert.deepEqual( lem.lemmas('matter'), [ ['matter', 'verb'], ['matter', 'noun'], ['matte', 'adj'], ['matt', 'adj'], ['mat', 'adj'] ] );
   assert.deepEqual( lem.lemmas('added'), [ ['add', 'verb'] ] );
+  assert.deepEqual( lem.lemmas('opposes'), [ ['oppose', 'verb' ] ] );
 
   // **************************************************
   // only_lemmas tests
@@ -248,6 +250,7 @@ QUnit.test( 'JavaScript Lemmatizer QUnit Tests', function( assert ) {
   assert.deepEqual( lem.only_lemmas('matter', 'noun'), [ 'matter' ] );
   assert.deepEqual( lem.only_lemmas('matter', 'adj'), [ 'matte', 'matt', 'mat' ] );
   assert.deepEqual( lem.only_lemmas('added', 'verb'), [ 'add' ] );
+  assert.deepEqual( lem.only_lemmas('opposes', 'verb'), [ 'oppose' ] );
 
   // various test without pos
   assert.deepEqual( lem.only_lemmas('goes'), [ 'go' ] );
@@ -313,4 +316,5 @@ QUnit.test( 'JavaScript Lemmatizer QUnit Tests', function( assert ) {
   assert.deepEqual( lem.only_lemmas('priorities'), [ 'priority' ] );
   assert.deepEqual( lem.only_lemmas('matter'), [ 'matter', 'matte', 'matt', 'mat' ] );
   assert.deepEqual( lem.only_lemmas('added'), [ 'add' ] );
+  assert.deepEqual( lem.only_lemmas('opposes'), [ 'oppose' ] );
 });
