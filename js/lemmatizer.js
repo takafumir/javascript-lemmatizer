@@ -249,7 +249,12 @@ Lemmatizer.prototype = {
 
     if ( this.ends_with_es() ) {
       // goes -> go
-      lemmas.push( form.slice( 0, -2 ) );
+      var verb_base = form.slice( 0, -2 );
+      lemmas.push( verb_base );
+      if ( !this.wordlists['verb'][verb_base] || this.wordlists['verb'][verb_base] != verb_base ) {
+        // opposes -> oppose
+        lemmas.push( form.slice( 0, -1 ) );
+      }
     } else if ( this.ends_with_verb_vowel_ys() ) {
       // annoys -> annoy
       lemmas.push( form.slice( 0, -1 ) );
