@@ -280,7 +280,7 @@ Lemmatizer.prototype = {
       lemmas.push( form.slice( 0, -3 ) );
       // pirouetting -> pirouette
       lemmas.push( form.slice( 0, -3 ) + 'e' );
-    } else if ( form.endsWith('ing') ) {
+    } else if ( form.endsWith('ing') && !this.exceptions['verb'][form] ) {
       // coding -> code
       var ing_base = form.slice( 0, -3 ) + 'e';
       lemmas.push( ing_base );

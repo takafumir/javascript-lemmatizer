@@ -91,6 +91,8 @@ QUnit.test( 'JavaScript Lemmatizer QUnit Tests', function( assert ) {
   assert.deepEqual( lem.lemmas('matter', 'adj'), [ ['matte', 'adj'], ['matt', 'adj'], ['mat', 'adj'] ] );
   assert.deepEqual( lem.lemmas('added', 'verb'), [ ['add', 'verb'] ] );
   assert.deepEqual( lem.lemmas('opposes', 'verb'), [ ['oppose', 'verb' ] ] );
+  assert.deepEqual( lem.lemmas('singing', 'verb'), [ ['sing', 'verb' ] ] );
+  assert.deepEqual( lem.lemmas('dying', 'verb'), [ ['die', 'verb' ] ] );
 
   // various test without pos
   assert.deepEqual( lem.lemmas('goes'), [ ['go', 'verb'], ['go', 'noun'] ] );
@@ -157,6 +159,8 @@ QUnit.test( 'JavaScript Lemmatizer QUnit Tests', function( assert ) {
   assert.deepEqual( lem.lemmas('matter'), [ ['matter', 'verb'], ['matter', 'noun'], ['matte', 'adj'], ['matt', 'adj'], ['mat', 'adj'] ] );
   assert.deepEqual( lem.lemmas('added'), [ ['add', 'verb'] ] );
   assert.deepEqual( lem.lemmas('opposes'), [ ['oppose', 'verb' ] ] );
+  assert.deepEqual( lem.lemmas('singing'), [ ['sing', 'verb'], ['singing', 'noun'], ['singing', 'adj'] ] );
+  assert.deepEqual( lem.lemmas('dying'), [ ['die', 'verb'], ['dying', 'noun'], ['dying', 'adj'] ] );
 
   // **************************************************
   // only_lemmas tests
@@ -251,6 +255,8 @@ QUnit.test( 'JavaScript Lemmatizer QUnit Tests', function( assert ) {
   assert.deepEqual( lem.only_lemmas('matter', 'adj'), [ 'matte', 'matt', 'mat' ] );
   assert.deepEqual( lem.only_lemmas('added', 'verb'), [ 'add' ] );
   assert.deepEqual( lem.only_lemmas('opposes', 'verb'), [ 'oppose' ] );
+  assert.deepEqual( lem.only_lemmas('singing', 'verb'), [ 'sing' ] );
+  assert.deepEqual( lem.only_lemmas('dying', 'verb'), [ 'die' ] );
 
   // various test without pos
   assert.deepEqual( lem.only_lemmas('goes'), [ 'go' ] );
@@ -317,4 +323,6 @@ QUnit.test( 'JavaScript Lemmatizer QUnit Tests', function( assert ) {
   assert.deepEqual( lem.only_lemmas('matter'), [ 'matter', 'matte', 'matt', 'mat' ] );
   assert.deepEqual( lem.only_lemmas('added'), [ 'add' ] );
   assert.deepEqual( lem.only_lemmas('opposes'), [ 'oppose' ] );
+  assert.deepEqual( lem.only_lemmas('singing'), [ 'sing', 'singing' ] );
+  assert.deepEqual( lem.only_lemmas('dying'), [ 'die', 'dying' ] );
 });
