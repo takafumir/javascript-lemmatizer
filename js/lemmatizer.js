@@ -362,9 +362,8 @@ Lemmatizer.prototype = {
       }
     });
 
-    if (lemmas.length === 0) {
-      lemmas.push(form);
-    }
+    // to push a word like 'after' as it is
+    lemmas.push(form);
 
     return [ lemmas, pos ];
   },
