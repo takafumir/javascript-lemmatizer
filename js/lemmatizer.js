@@ -148,7 +148,7 @@ Lemmatizer.prototype = {
   // Lemmatizer inside, so don't call them from outside.
   // **************************************************
   is_lemma_empty: function() {
-    return this.lems.length == 0;
+    return this.lems.length === 0;
   },
 
   // set up dictionary data
@@ -200,7 +200,7 @@ Lemmatizer.prototype = {
 
   // build array lemmas(this.lems) like [ [lemma1, "verb"], [lemma2, "noun"]... ]
   irregular_bases: function(pos) {
-    if (this.exceptions[pos][this.form] && this.exceptions[pos][this.form] != this.form) {
+    if (this.exceptions[pos][this.form] && this.exceptions[pos][this.form] !== this.form) {
       this.lems.push( [this.exceptions[pos][this.form], pos] );
     }
   },
@@ -237,7 +237,7 @@ Lemmatizer.prototype = {
     var lemmas = bases[0];
     var pos = bases[1];
     _.each( lemmas, function(lemma) {
-      if ( self.wordlists[pos][lemma] && self.wordlists[pos][lemma] == lemma ) {
+      if ( self.wordlists[pos][lemma] && self.wordlists[pos][lemma] === lemma ) {
         self.lems.push( [lemma, pos] );
       }
     });
@@ -251,7 +251,7 @@ Lemmatizer.prototype = {
       // goes -> go
       var verb_base = form.slice( 0, -2 );
       lemmas.push( verb_base );
-      if ( !this.wordlists['verb'][verb_base] || this.wordlists['verb'][verb_base] != verb_base ) {
+      if ( !this.wordlists['verb'][verb_base] || this.wordlists['verb'][verb_base] !== verb_base ) {
         // opposes -> oppose
         lemmas.push( form.slice( 0, -1 ) );
       }
@@ -262,7 +262,7 @@ Lemmatizer.prototype = {
       // saved -> save
       var past_base = form.slice( 0, -1 );
       lemmas.push( past_base );
-      if ( !this.wordlists['verb'][past_base] || this.wordlists['verb'][past_base] != past_base ) {
+      if ( !this.wordlists['verb'][past_base] || this.wordlists['verb'][past_base] !== past_base ) {
         // talked -> talk, but not push like coded -> cod
         lemmas.push( form.slice( 0, -2 ) );
       }
@@ -284,7 +284,7 @@ Lemmatizer.prototype = {
       // coding -> code
       var ing_base = form.slice( 0, -3 ) + 'e';
       lemmas.push( ing_base );
-      if ( !this.wordlists['verb'][ing_base] || this.wordlists['verb'][ing_base] != ing_base ) {
+      if ( !this.wordlists['verb'][ing_base] || this.wordlists['verb'][ing_base] !== ing_base ) {
         // talking -> talk, but not push like coding -> cod
         lemmas.push( form.slice( 0, -3 ) );
       }
@@ -304,7 +304,7 @@ Lemmatizer.prototype = {
       }
     });
 
-    if (lemmas.length == 0) {
+    if (lemmas.length === 0) {
       lemmas.push(form);
     }
 
@@ -319,7 +319,7 @@ Lemmatizer.prototype = {
       // watches -> watch
       var noun_base = form.slice( 0, -2 );
       lemmas.push( noun_base );
-      if ( !this.wordlists['noun'][noun_base] || this.wordlists['noun'][noun_base] != noun_base ) {
+      if ( !this.wordlists['noun'][noun_base] || this.wordlists['noun'][noun_base] !== noun_base ) {
         // horses -> horse
         lemmas.push( form.slice( 0, -1 ) );
       }
@@ -335,7 +335,7 @@ Lemmatizer.prototype = {
       }
     });
 
-    if (lemmas.length == 0) {
+    if (lemmas.length === 0) {
       lemmas.push(form);
     }
 
@@ -362,7 +362,7 @@ Lemmatizer.prototype = {
       }
     });
 
-    if (lemmas.length == 0) {
+    if (lemmas.length === 0) {
       lemmas.push(form);
     }
 
@@ -398,7 +398,7 @@ Lemmatizer.prototype = {
   is_include: function(lemmas, target) {
     var len = lemmas.length;
     for (var i = 0; i < len; i++) {
-      if (lemmas[i][0] == target[0] && lemmas[i][1] == target[1]) {
+      if (lemmas[i][0] === target[0] && lemmas[i][1] === target[1]) {
         return true;
       }
     }
