@@ -87,7 +87,7 @@ lemmatizer.lemmas('coded', 'verb');    // => [ ['code', 'verb'] ]
 // of course, available for irregular iflected form words.
 lemmatizer.lemmas('went', 'verb');     // => [ ['go', 'verb'] ]
 lemmatizer.lemmas('written', 'verb');  // => [ ['write', 'verb'] ]
-lemmatizer.lemmas('better', 'adj');    // => [ ['good', 'adj'] ]
+lemmatizer.lemmas('better', 'adj');    // => [ ['better', 'adj'], ['good', 'adj'] ]
 
 // when multiple base forms are found, return all of them.
 lemmatizer.lemmas('leaves', 'noun');   // => [ ['leave', 'noun'], ['leaf', 'noun'] ]
