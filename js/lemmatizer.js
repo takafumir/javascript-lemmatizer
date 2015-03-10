@@ -304,9 +304,7 @@ Lemmatizer.prototype = {
       }
     });
 
-    if (lemmas.length === 0) {
-      lemmas.push(form);
-    }
+    lemmas.push(form);
 
     return [ lemmas, 'verb' ];
   },
@@ -335,9 +333,8 @@ Lemmatizer.prototype = {
       }
     });
 
-    if (lemmas.length === 0) {
-      lemmas.push(form);
-    }
+    // to push a word like 'us' as it is
+    lemmas.push(form);
 
     return [ lemmas, 'noun' ];
   },

@@ -94,6 +94,7 @@ QUnit.test( 'JavaScript Lemmatizer QUnit Tests', function( assert ) {
   assert.deepEqual( lem.lemmas('singing', 'verb'), [ ['sing', 'verb' ] ] );
   assert.deepEqual( lem.lemmas('dying', 'verb'), [ ['die', 'verb' ] ] );
   assert.deepEqual( lem.lemmas('after', 'adv'), [ ['after', 'adv' ], ['aft', 'adv' ] ] );
+  assert.deepEqual( lem.lemmas('us', 'noun'), [ ['us', 'noun' ] ] );
 
   // various test without pos
   assert.deepEqual( lem.lemmas('goes'), [ ['go', 'verb'], ['go', 'noun'] ] );
@@ -163,6 +164,7 @@ QUnit.test( 'JavaScript Lemmatizer QUnit Tests', function( assert ) {
   assert.deepEqual( lem.lemmas('singing'), [ ['sing', 'verb'], ['singing', 'noun'], ['singing', 'adj'] ] );
   assert.deepEqual( lem.lemmas('dying'), [ ['die', 'verb'], ['dying', 'noun'], ['dying', 'adj'] ] );
   assert.deepEqual( lem.lemmas('after'), [ ['after', 'adv' ], ['aft', 'adv'], ['after', 'adj' ], ['aft', 'adj'] ] );
+  assert.deepEqual( lem.lemmas('us'), [ ['us', 'noun' ] ] );
 
   // **************************************************
   // only_lemmas tests
@@ -260,6 +262,7 @@ QUnit.test( 'JavaScript Lemmatizer QUnit Tests', function( assert ) {
   assert.deepEqual( lem.only_lemmas('singing', 'verb'), [ 'sing' ] );
   assert.deepEqual( lem.only_lemmas('dying', 'verb'), [ 'die' ] );
   assert.deepEqual( lem.only_lemmas('after', 'adv'), [ 'after', 'aft' ] );
+  assert.deepEqual( lem.only_lemmas('us', 'noun'), [ 'us' ] );
 
   // various test without pos
   assert.deepEqual( lem.only_lemmas('goes'), [ 'go' ] );
@@ -329,4 +332,5 @@ QUnit.test( 'JavaScript Lemmatizer QUnit Tests', function( assert ) {
   assert.deepEqual( lem.only_lemmas('singing'), [ 'sing', 'singing' ] );
   assert.deepEqual( lem.only_lemmas('dying'), [ 'die', 'dying' ] );
   assert.deepEqual( lem.only_lemmas('after'), [ 'after', 'aft' ] );
+  assert.deepEqual( lem.only_lemmas('us'), [ 'us' ] );
 });
